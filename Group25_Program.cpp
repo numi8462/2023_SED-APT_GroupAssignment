@@ -10,16 +10,13 @@
 */
 
 #include <iostream>
-#include <vector>
-using namespace std;
 
-class Motorbike
+void menu(){
+  
+}
+
+int main(int argc, char const *argv[])
 {
-private:
-    /* data */
-public:
-    Motorbike(/* args */);
-    ~Motorbike();
-};
-
-
+    /* code */
+    return 0;
+}

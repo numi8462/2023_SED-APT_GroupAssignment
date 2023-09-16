@@ -10,6 +10,7 @@
 */
 
 #include <iostream>
+#include "Motorbike.h"
 #include <vector>
 using namespace std;
 
@@ -17,9 +18,23 @@ class RentalService
 {
 private:
     /* data */
+    vector<Motorbike*> motorbikes;
 public:
     RentalService(/* args */);
     ~RentalService();
+
+    void registerMember(){
+
+    }
+
+    void showMotorbikeList(){
+      for (int i = 0; i < motorbikes.size(); i++)
+      {
+        /* code */
+        motorbikes[i]->showInfo();
+      }
+      
+    }
 };
 
 
