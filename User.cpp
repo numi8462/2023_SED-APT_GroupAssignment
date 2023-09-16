@@ -17,15 +17,25 @@ class User
 {
 private:
     /* data */
+    string name;
+    
 public:
     User(/* args */);
     ~User();
+    friend class Member;
+    friend class Admin;
+    friend class NonMember;
 };
 
 class Member{};
 
 class NonMember{};
 
-class Admin{};
+class Admin : public User{
+  private:
+
+  public:
+    Admin(/* args */){}; 
+};
 
 
