@@ -17,7 +17,6 @@
 #include <vector>
 using namespace std;
 
-// Member.h
 class Member {
     private:
         string fullName;
@@ -35,6 +34,7 @@ class Member {
         double minimumRenterScore;
         Request myRequest;
     public:
+        Member(){};
         Member( string fullName, string username, string password, int phoneNumber, int licence, string expiryDate, int points, double rentScoreAverage,Motorbike rentedBike, vector<Request*> requests, double minimumRenterScore, Request myRequest){
             this->fullName = fullName;
             this->username = username;

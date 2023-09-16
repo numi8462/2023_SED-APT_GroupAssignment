@@ -9,7 +9,7 @@
   Acknowledgement: 
 */
 
-#include "Review.cpp"
+#include "Review.h"
 #include <iostream>
 #include <vector>
 #include <ctime>
@@ -31,7 +31,21 @@ private:
     time_t rentingEnd;
     vector<Review*> reviews;
 public:
-    Motorbike(/* args */);
+    Motorbike(){};
+    Motorbike(string owner, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, time_t rentingStart, time_t rentingEnd, vector<Review*> reviews){
+        this->owner = owner;
+        this->model = model;
+        this->color = color;
+        this->engineSize = engineSize;
+        this->mode = mode;
+        this->yearMade = yearMade;
+        this->description = description;
+        this->rent = rent;
+        this->ratingAverage = ratingAverage;
+        this->rentingStart = rentingStart;
+        this->rentingEnd = rentingEnd;
+        this->reviews = reviews;
+    };
     ~Motorbike();
 
     void setRentingPeriod(){

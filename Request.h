@@ -9,7 +9,6 @@
   Acknowledgement: 
 */
 
-#include "Member.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -25,6 +24,7 @@ class Request {
         int credit;
         bool status;
     public:
+        Request(){};
         Request(Member renter,Motorbike rentalBike,time_t start,time_t end,int credit,bool status) : renter(renter), rentalBike(rentalBike), start(start), end(end), credit(credit), status(status) {};
 
         void setCredit(int credit) {}
