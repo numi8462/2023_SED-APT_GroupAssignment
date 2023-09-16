@@ -20,6 +20,7 @@
 #include "Database.h"
 #include "Request.h"
 #include "Guest.h"
+using namespace std;
 
 void menu(){
   
