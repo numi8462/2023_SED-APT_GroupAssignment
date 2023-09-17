@@ -15,6 +15,7 @@
 #include <ctime>
 using namespace std;
 
+class Review;
 class Motorbike
 {
 private:
@@ -32,9 +33,10 @@ private:
     vector<Review*> reviews;
     string city;
     int pointsPerDay;
+    double minimumRenterScore;
 public:
     Motorbike(){};
-    Motorbike(string owner, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, time_t rentingStart, time_t rentingEnd, vector<Review*> reviews, string city, int pointsPerDay){
+    Motorbike(string owner, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, time_t rentingStart, time_t rentingEnd, vector<Review*> reviews, string city, int pointsPerDay, double minimumRenterScore){
         this->owner = owner;
         this->model = model;
         this->color = color;
@@ -49,14 +51,27 @@ public:
         this->reviews = reviews;
         this->city = city;
         this->pointsPerDay = pointsPerDay;
+        this->minimumRenterScore = minimumRenterScore;
     };
-    ~Motorbike();
 
+    // getters
+    string getCity(){return city;}
+    int getPointsPerDay(){return pointsPerDay;}
+    double getRatingAverage(){return ratingAverage;}
+    double getMinimumRenterScore() { return minimumRenterScore; }
+
+    // sets the minimum renter score
+    void setMinimumRenter(double score){
+        this->minimumRenterScore = score;
+    };
+   
+    // sets the renting period for my bike
     void setRentingPeriod(){
       
     };
-    
-    void showInfo(){
+
+    // shows motorbike info
+    void showDetailedInfo(){
       cout << "Owner: " << owner << endl;
       cout << "Model: " << model << endl;
       cout << "Color: " << color << endl;
@@ -68,10 +83,21 @@ public:
       cout << "Rating Average: " << ratingAverage << endl;
       cout << "Renting Start: " << rentingStart << endl;
       cout << "Renting End: " << rentingEnd << endl;
+      cout << "City: " << city << endl;
+      cout << "Points Per Day: " << pointsPerDay << endl; 
       cout << "Reviews: " << endl;
       for(int i = 0; i < reviews.size(); i++){
         reviews[i]->showReview();
       }
+    }
+
+    // shows brief info of bike
+    void showInfo(){
+      cout << "Owner: " << owner << ", Model: " << model <<", Credit per day: " << pointsPerDay << ", City: " << city << endl;
+    }
+
+    void showRentInfo(){
+
     }
 };
 
