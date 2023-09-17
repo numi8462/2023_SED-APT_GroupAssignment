@@ -30,9 +30,11 @@ private:
     time_t rentingStart;
     time_t rentingEnd;
     vector<Review*> reviews;
+    string city;
+    int pointsPerDay;
 public:
     Motorbike(){};
-    Motorbike(string owner, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, time_t rentingStart, time_t rentingEnd, vector<Review*> reviews){
+    Motorbike(string owner, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, time_t rentingStart, time_t rentingEnd, vector<Review*> reviews, string city, int pointsPerDay){
         this->owner = owner;
         this->model = model;
         this->color = color;
@@ -45,12 +47,15 @@ public:
         this->rentingStart = rentingStart;
         this->rentingEnd = rentingEnd;
         this->reviews = reviews;
+        this->city = city;
+        this->pointsPerDay = pointsPerDay;
     };
     ~Motorbike();
 
     void setRentingPeriod(){
       
     };
+    
     void showInfo(){
       cout << "Owner: " << owner << endl;
       cout << "Model: " << model << endl;
