@@ -13,6 +13,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+
 using namespace std;
 class Review {
     private:
@@ -26,5 +27,10 @@ class Review {
             cout << "Name: " << name << endl;
             cout << "Score: " << score << endl;
             cout << "Comment: " << comment << endl;
+        }
+
+        void typeReview(string name){
+            cout << "Please write the review for rented bike" << endl;
+            getline(cin,name);
         }
 };

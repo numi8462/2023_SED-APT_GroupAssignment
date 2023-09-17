@@ -29,13 +29,12 @@ class Member {
         string expiryDate;
         int points;
         double rentScoreAverage;
-        Motorbike rentedBike;
-        vector<Request*> requests;
-        double minimumRenterScore;
+        Motorbike* rentedBike;
         Request myRequest;
+        vector<Review*> rentReviews;
     public:
         Member(){};
-        Member( string fullName, string username, string password, int phoneNumber, int licence, string expiryDate, int points, double rentScoreAverage,Motorbike rentedBike, vector<Request*> requests, double minimumRenterScore, Request myRequest){
+        Member( string fullName, string username, string password, int phoneNumber, int licence, string expiryDate, int points, double rentScoreAverage,Motorbike* rentedBike,Request myRequest, vector<Review*> rentReviews ){
             this->fullName = fullName;
             this->username = username;
             this->password = password;
@@ -45,11 +44,11 @@ class Member {
             this->points = points;
             this->rentScoreAverage = rentScoreAverage;
             this->rentedBike = rentedBike;
-            this->requests = requests;
-            this->minimumRenterScore = minimumRenterScore;
             this->myRequest = myRequest;
+            this->rentReviews = rentReviews;
         };
 
+        // shows member information
         void showInfo(){
             cout << "Full Name: " << fullName << endl;
             cout << "Username: " << username << endl;
@@ -62,6 +61,42 @@ class Member {
             cout << "Points: " << points << endl;
             cout << "Rent Score Average: " << rentScoreAverage << endl;
             cout << "Rented Bike: " << endl;
-            rentedBike.showInfo();
+            rentedBike->showInfo();
+        }
+        
+        // getters
+        string getFullName(){
+            return fullName;
+        }
+        int getPoints(){
+            return points;
+        }
+        double getRentScoreAverage(){
+            return rentScoreAverage;
+        }
+
+        // sets my request if Member sends rent request
+        void setMyRequest(Request request){
+            this->myRequest = request;
+        }
+
+        // if rented successfully set my rented bike
+        void setRentedBike(Motorbike &bike){
+            this->rentedBike = &bike;
+        }
+
+        // rents bike if request status is true
+        void rentBike(Motorbike &bike){
+            if(myRequest.status == true){
+                setRentedBike(bike);
+                cout <<"Motorbike Rented successfully!" << endl;
+            } else {
+                cout << "Your request is not accepted yet!" << endl;
+            }
+            
+        }
+
+        void setRentReview(Review &review){
+
         }
 };

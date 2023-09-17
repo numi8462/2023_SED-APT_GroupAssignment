@@ -9,8 +9,7 @@
   Acknowledgement: 
 */
 
-#include "Motorbike.h"
-#include "Request.h"
+
 #include "Member.h"
 #include <iostream>
 #include <fstream>
@@ -22,8 +21,26 @@ class Owner : public Member {
     private:
         vector<Request*> listOfRequests;
         Motorbike *motorbike;
-        double minimumRenterScore;
     public:
         Owner(){}
 
+        Owner(string fullName, string username, string password, int phoneNumber, int licence, string expiryDate, int points, double rentScoreAverage,Motorbike* rentedBike, Request myRequest,vector<Review*> rentReviews, vector<Request*> listOfRequests, Motorbike *motorbike) : 
+        Member(fullName, username, password, phoneNumber, licence, expiryDate, points, rentScoreAverage, rentedBike, myRequest, rentReviews),
+        listOfRequests(listOfRequests),
+        motorbike(motorbike)
+        {}
+
+
+        
+
+        // sets my motobike that is for rent
+        void setMotorbike(Motorbike *motorbike){
+            this->motorbike = motorbike;
+        };
+
+        string getName(){
+            return getFullName();
+        }
+
+        friend class Motorbike;
 };

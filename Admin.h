@@ -8,6 +8,7 @@
   Created  date: 14/09/2023
   Acknowledgement: 
 */
+#include "Database.h"
 #include <iostream>
 #include <fstream>
 #include <string>

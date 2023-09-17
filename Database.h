@@ -9,8 +9,7 @@
   Acknowledgement: 
 */
 
-#include "Member.h"
-#include "Motorbike.h"
+#include "RentalService.h"
 #include <iostream>
 #include <fstream>
 #include <string>

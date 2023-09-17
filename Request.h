@@ -15,18 +15,29 @@
 #include <ctime>
 using namespace std;
 
+class Member;
+class Motorbike;
 class Request {
     private:
-        Member renter;
-        Motorbike rentalBike;
+        Member* renter;
+        Motorbike* rentalBike;
         time_t start;
         time_t end;
         int credit;
         bool status;
     public:
         Request(){};
-        Request(Member renter,Motorbike rentalBike,time_t start,time_t end,int credit,bool status) : renter(renter), rentalBike(rentalBike), start(start), end(end), credit(credit), status(status) {};
+        Request(Member* renter,Motorbike* rentalBike,time_t start,time_t end,int credit,bool status) : renter(renter), rentalBike(rentalBike), start(start), end(end), credit(credit), status(status) {};
 
-        void setCredit(int credit) {}
-        void setStatus(bool status) {}
+        // sets the required amount of credit for rent
+        void setCredit(int credit) {
+          this->credit = credit;
+        }
+
+        // sets reqeust status
+        void setStatus(bool status) {
+          this->status = status;
+        }
+
+        friend class Member;
 };
