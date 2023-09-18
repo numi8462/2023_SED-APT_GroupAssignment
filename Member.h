@@ -126,6 +126,14 @@ class Member {
         void creditDeduction(int credit){
             this->points = this->points - credit;
         }
+        // charge credit
+        void chargeCredit(){
+
+        }
+        // add credit if motorbike is rented
+        void addCredit(){
+
+        }
 
         // show my reviews from Owners
         void showMemberReviews(){
