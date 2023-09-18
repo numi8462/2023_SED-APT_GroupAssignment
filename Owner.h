@@ -20,22 +20,36 @@ using namespace std;
 class Owner : public Member {
     private:
         vector<Request*> listOfRequests;
-        Motorbike *motorbike;
+        Motorbike *myBike;
+
     public:
         Owner(){}
 
-        Owner(string fullName, string username, string password, int phoneNumber, int licence, string expiryDate, int points, double rentScoreAverage,Motorbike* rentedBike, Request myRequest,vector<Review*> rentReviews, vector<Request*> listOfRequests, Motorbike *motorbike) : 
+        Owner(string fullName, string username, string password, int phoneNumber, int licence, string expiryDate, int points, double rentScoreAverage,Motorbike* rentedBike, Request *myRequest,vector<Review*> rentReviews, vector<Request*> listOfRequests, Motorbike *myBike) : 
         Member(fullName, username, password, phoneNumber, licence, expiryDate, points, rentScoreAverage, rentedBike, myRequest, rentReviews),
-        listOfRequests(listOfRequests),
-        motorbike(motorbike)
-        {}
+        listOfRequests(listOfRequests),myBike(myBike){}
 
+        ~Owner() override {}
 
-        
+        void writeReview(Member &member){
+            Review* review = new Review;
+            int score;
+            string comment;
+
+            cout << "\nPlease write the review for the renter:" << endl;
+            cout << "Score (1-10): ";
+            cin >> score;
+            cin.ignore(1);
+            cout << "Write comment: ";
+            getline(cin,comment);
+            review->setScore(score);
+            review->setComment(comment);
+            member.pushReview(review);
+        }
 
         // sets my motobike that is for rent
-        void setMotorbike(Motorbike *motorbike){
-            this->motorbike = motorbike;
+        void setMotorbike(Motorbike &myBike){
+            this->myBike = &myBike;
         };
 
         string getName(){

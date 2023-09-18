@@ -72,10 +72,10 @@ public:
 
     // manu for searching bike
     void menuSearchBike(Member& member){
-      cout << "\nChoose a city to borrow:   1.Hanoi   2.Hochiminh\n" << endl;
+      cout << "\nChoose a city to borrow:   1.Hanoi   2.Saigon\n" << endl;
       int choice;
       do {
-          cout << "Enter your choice: ";
+          cout << "Enter your choice: ";  
           cin >> choice;
 
           switch (choice) {
@@ -85,7 +85,7 @@ public:
               break;
           case 2:
               cout << "Avaiable bike for you are: (Credit less than " << member.getPoints() << ", Renter rating more than " << member.getRentScoreAverage() << ")" << endl;
-              showMotorbikeList("Hochiminh", member.getPoints(), member.getRentScoreAverage());
+              showMotorbikeList("Saigon", member.getPoints(), member.getRentScoreAverage());
               break;
           default:
               cout << "Invalid Choice. Please try again." << endl;
