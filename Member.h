@@ -30,11 +30,11 @@ class Member {
         int points;
         double rentScoreAverage;
         Motorbike* rentedBike;
-        Request myRequest;
+        Request* myRequest;
         vector<Review*> rentReviews;
     public:
         Member(){};
-        Member( string fullName, string username, string password, int phoneNumber, int licence, string expiryDate, int points, double rentScoreAverage,Motorbike* rentedBike,Request myRequest, vector<Review*> rentReviews ){
+        Member( string fullName, string username, string password, int phoneNumber, int licence, string expiryDate, int points, double rentScoreAverage,Motorbike* rentedBike,Request *myRequest, vector<Review*> rentReviews ){
             this->fullName = fullName;
             this->username = username;
             this->password = password;
@@ -47,7 +47,7 @@ class Member {
             this->myRequest = myRequest;
             this->rentReviews = rentReviews;
         };
-
+        virtual ~Member() {}
         // shows member information
         void showInfo(){
             cout << "Full Name: " << fullName << endl;
@@ -75,20 +75,28 @@ class Member {
             return rentScoreAverage;
         }
 
-        // sets my request if Member sends rent request
-        void setMyRequest(Request request){
-            this->myRequest = request;
+        Request* getRequest(){
+            return myRequest;
         }
 
-        // if rented successfully set my rented bike
-        void setRentedBike(Motorbike &bike){
-            this->rentedBike = &bike;
+        Motorbike* getRentedBike(){
+            return rentedBike;
+        }
+
+        void pushReview(Review* review){
+            rentReviews.push_back(review);
+        }
+
+        // sets my request if Member sends rent request
+        void setMyRequest(Request &request){
+            this->myRequest = &request;
         }
 
         // rents bike if request status is true
-        void rentBike(Motorbike &bike){
-            if(myRequest.status == true){
-                setRentedBike(bike);
+        void rentBike(Motorbike &rentedBike){
+            if(myRequest->status == true){
+                // rentedBike.setRentStatus(true);
+                this->rentedBike = &rentedBike;
                 cout <<"Motorbike Rented successfully!" << endl;
             } else {
                 cout << "Your request is not accepted yet!" << endl;
@@ -96,7 +104,49 @@ class Member {
             
         }
 
-        void setRentReview(Review &review){
+        // writes review for bike
+        void writeReview(){
+            Review* review = new Review;
 
+            int score;
+            string comment;
+
+            cout << "Please write the review for rented bike:" << endl;
+            cout << "Score (1-10): ";
+            cin >> score;
+            cin.ignore(1);
+            cout << "Write comment: ";
+            getline(cin,comment);
+            review->setScore(score);
+            review->setComment(comment);
+            rentedBike->pushReview(review);
         }
+
+        // deduct credit if rented successfully
+        void creditDeduction(int credit){
+            this->points = this->points - credit;
+        }
+
+        // show my reviews from Owners
+        void showMemberReviews(){
+            cout << "\n<    Reviews I received    >" << endl;
+            cout << "My average rating: " << getAverageScore() << endl;
+            for(int i = 0; i < rentReviews.size(); i++){
+                cout << i+1 << ". ";
+                rentReviews[i]->showReview();
+            }
+        }
+
+        // calculate average rating score
+        double getAverageScore(){
+            double total = 0;
+            int index = 0;
+            for(int i =0; i < rentReviews.size(); i++){
+                total += rentReviews[i]->getScore();
+                index++;
+            }
+            this->rentScoreAverage = total / index;
+            return rentScoreAverage;
+        }
+
 };

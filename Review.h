@@ -17,20 +17,23 @@
 using namespace std;
 class Review {
     private:
-        string name;
         double score;
         string comment;
     public:
-        Review(string name,double score, string comment) : name(name), score(score), comment(comment) { };
+        Review() { };
+        Review(double score, string comment) : score(score), comment(comment) { };
 
+        //getters
+        double getScore() { return score; };
+        string getComment() { return comment; };
+        
         void showReview(){
-            cout << "Name: " << name << endl;
-            cout << "Score: " << score << endl;
-            cout << "Comment: " << comment << endl;
+            cout << "Score: " << score << ", Comment: " << comment << endl;
         }
 
-        void typeReview(string name){
-            cout << "Please write the review for rented bike" << endl;
-            getline(cin,name);
-        }
+        void setScore(double score) { this->score = score; };
+        void setComment(string comment) { this->comment = comment; };
+
+        friend class Member;
+        friend class Motorbike;
 };

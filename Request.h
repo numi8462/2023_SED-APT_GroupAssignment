@@ -29,6 +29,7 @@ class Request {
         Request(){};
         Request(Member* renter,Motorbike* rentalBike,time_t start,time_t end,int credit,bool status) : renter(renter), rentalBike(rentalBike), start(start), end(end), credit(credit), status(status) {};
 
+        bool getStatus() { return status; };
         // sets the required amount of credit for rent
         void setCredit(int credit) {
           this->credit = credit;

@@ -70,6 +70,14 @@ public:
       
     };
 
+    void setRentStatus(bool rent){
+      this->rent = rent;
+    }
+
+    void pushReview(Review* review){
+      reviews.push_back(review);
+    }
+
     // shows motorbike info
     void showDetailedInfo(){
       cout << "Owner: " << owner << endl;
@@ -93,12 +101,50 @@ public:
 
     // shows brief info of bike
     void showInfo(){
-      cout << "Owner: " << owner << ", Model: " << model <<", Credit per day: " << pointsPerDay << ", City: " << city << endl;
+      cout << "\n<  Rented Motorbike Information  >" << endl;
+      cout << "Owner: " << owner << ", Model: " << model <<", Credit per day: " << pointsPerDay << ", City: " << city << "\n" << endl;
     }
 
     void showRentInfo(){
 
     }
+
+    void showRentReviews(){
+      cout << "\n<  Motorbike Reviews  >" << endl;
+      cout << "Motorbike average rating: " << getAverageRating() << endl;
+      for(int i = 0; i < reviews.size(); i++){
+        cout << i+1 << ". ";
+        reviews[i]->showReview();
+      }
+    }
+    // calculate average bike score
+    double getAverageRating(){
+        double total = 0;
+        int index = 0;
+        for(int i =0; i < reviews.size(); i++){
+            total += reviews[i]->getScore();
+            index++;
+        }
+        this->ratingAverage = total / index;
+        return ratingAverage;
+    }
+    // function to write review and push to review list
+    // void setReview(){
+    //   Review* review = new Review;
+
+    //   int score;
+    //   string comment;
+
+    //   cout << "Please write the review for rented bike:" << endl;
+    //   cout << "Score (1-10): ";
+    //   cin >> score;
+    //   cin.ignore(1);
+    //   cout << "Write comment: " << endl;
+    //   getline(cin,comment);
+    //   review->setScore(score);
+    //   review->setComment(comment);
+    //   reviews.push_back(review);
+    // }
 };
 
 

@@ -43,27 +43,53 @@ int main(int argc, char const *argv[])
   rs.addMotorbike(bike8);
 
   Request request1;
-  Owner o1("John", "username", "password", 010, 010, "expiryDate", 3, 6, &bike1, request1,vector<Review*>{},vector<Request*>{},&bike1);
+  Review r1(5,""),r2(6,"");
+  Owner o1("John", "username", "password", 010, 010, "expiryDate", 3, 6, &bike1, &request1,vector<Review*>{},vector<Request*>{},&bike1);
+  Member m1("Alice", "username", "password",222,222, "expiryDate",5,5,nullptr,&request1,vector<Review*>{});
+
+
+
+  // @test for renting bike and write review for bike
+  m1.getRequest()->setStatus(true);
+  m1.rentBike(bike1);
+  m1.getRentedBike()->showInfo();
+
+  // if(m1.getRequest()->getStatus() == true){
+  //   m1.writeReview();
+  // }
+  // bike1.showRentReviews();
+  
+  m1.pushReview(&r1);
+  m1.pushReview(&r2);
+
+  o1.writeReview(m1);
+  m1.showMemberReviews();
+  
+
+
+
+  // @test for rent if request true
   // request1.setStatus(true);
   // m1.setMyRequest(request1);
   // m1.rentBike(bike1);
 
-  rs.menuMain();
-  int choice;
-  cin >> choice;
-  switch (choice)
-  {
-    case 1:
-      break;
-    case 2:
-      rs.menuMember(o1);
-      break;
-    case 3:
-      break;
-    default:
-      cout << "Invalid Choice" << endl;
-      break;
-  }
+  // @testing menu
+  // rs.menuMain();
+  // int choice;
+  // cin >> choice;
+  // switch (choice)
+  // {
+  //   case 1:
+  //     break;
+  //   case 2:
+  //     rs.menuMember(o1);
+  //     break;
+  //   case 3:
+  //     break;
+  //   default:
+  //     cout << "Invalid Choice" << endl;
+  //     break;
+  // }
 
   return 0;
 }
