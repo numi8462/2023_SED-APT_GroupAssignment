@@ -12,7 +12,6 @@ class System;
 
 class User {
 protected:
-    std::string lonThien;
     std::string username;
     std::string password;
 
