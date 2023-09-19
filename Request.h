@@ -66,13 +66,13 @@ class Request {
         };
         
     // Parameterized constructor
-        Request(Member renter, Motorbike rentalBike, Date startTime, Date endTime) {
-          this->renter = renter;
-          this->rentalBike = rentalBike;
-          this->startTime = startTime;
-          this->endTime = endTime;
-          status = false;
-        }
+        // Request(Member renter, Motorbike rentalBike, Date startTime, Date endTime) {
+        //   this->renter = renter;
+        //   this->rentalBike = rentalBike;
+        //   this->startTime = startTime;
+        //   this->endTime = endTime;
+        //   status = false;
+        // }
     //Getter method to get the status
         bool getStatus() { 
             return status; 

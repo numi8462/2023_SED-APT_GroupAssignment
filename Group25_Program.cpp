@@ -54,10 +54,10 @@ int main(int argc, char const *argv[])
   m1.rentBike(bike1);
   m1.getRentedBike()->showInfo();
 
-  // if(m1.getRequest()->getStatus() == true){
-  //   m1.writeReview();
-  // }
-  // bike1.showRentReviews();
+  if(m1.getRequest()->getStatus() == true){
+    m1.writeReview();
+  }
+  bike1.showRentReviews();
   
   m1.pushReview(&r1);
   m1.pushReview(&r2);
@@ -73,7 +73,7 @@ int main(int argc, char const *argv[])
   // m1.setMyRequest(request1);
   // m1.rentBike(bike1);
 
-  // @testing menu
+  // // @testing menu
   // rs.menuMain();
   // int choice;
   // cin >> choice;
