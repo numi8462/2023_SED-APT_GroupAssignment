@@ -50,6 +50,10 @@ class Date {
         int getDay() const {
             return day;
         }
+        int operator-(const Date &d) {
+            // Assuming each month has 30 days for simplicity
+            return (year - d.year) * 360 + (month - d.month) * 30 + (day - d.day);
+        }
 };
 class Request {
     private:
