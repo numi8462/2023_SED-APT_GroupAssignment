@@ -121,7 +121,16 @@ class Member {
             review->setComment(comment);
             rentedBike->pushReview(review);
         }
-
+        //Take in the Motorbike object and the rental time as parameters.
+        void sendRequest(Motorbike &motorbike, Date start, Date end) {
+              Request *request = new Request();
+              request->renter = this;
+              request->rentalBike = &motorbike;
+              request->start = start;
+              request->end = end;
+              int rentingDays = end - start; // Calculate renting days
+              request->credit = rentingDays * motorbike.getPointsPerDay(); // Use to calculate credit
+      }
         // deduct credit if rented successfully
         void creditDeduction(int credit){
             this->points = this->points - credit;
