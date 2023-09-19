@@ -1,5 +1,5 @@
-#ifndef DAPDIXAYLAI_USER_H
-#define DAPDIXAYLAI_USER_H
+#ifndef USER
+#define USER
 
 
 
@@ -23,4 +23,4 @@ public:
 };
 
 
-#endif //DAPDIXAYLAI_USER_H
+#endif 
