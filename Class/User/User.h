@@ -1,5 +1,5 @@
-#ifndef USER
-#define USER
+#ifndef USER_B
+#define USER_B
 
 
 
@@ -21,6 +21,3 @@ public:
     friend class System;
 
 };
-
-
-#endif 
