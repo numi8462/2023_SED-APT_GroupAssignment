@@ -8,8 +8,9 @@
   Created  date: 14/09/2023
   Acknowledgement: 
 */
-
-#include "RentalService.h"
+#ifndef DATABASE_H
+#define DATABASE_H
+#include "../Classes/User/Admin/Admin.cpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -29,12 +30,7 @@ public:
     Database(string fileName);
     ~Database();
 
-    void displayData(){
-        for(int i = 0; i < members.size(); i++){
-            members[i]->showInfo();
-        }
-        for(int i = 0; i < motorbikes.size(); i++){
-            motorbikes[i]->showInfo();
-        }
-    };
+    void displayData();
 };
+
+#endif // DATABASE_H

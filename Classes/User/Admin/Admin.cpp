@@ -8,7 +8,9 @@
   Created  date: 14/09/2023
   Acknowledgement: 
 */
-#include "Database.h"
+#ifndef ADMIN_H
+#define ADMIN_H
+#include "../../Service/RentalService.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -36,3 +38,5 @@ class Admin {
         }
         
 };
+
+#endif
