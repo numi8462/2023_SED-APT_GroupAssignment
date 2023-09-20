@@ -8,7 +8,8 @@
   Created  date: 14/09/2023
   Acknowledgement: 
 */
-
+#ifndef REVIEW_H
+#define REVIEW_H
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -24,16 +25,16 @@ class Review {
         Review(double score, string comment) : score(score), comment(comment) { };
 
         //getters
-        double getScore() { return score; };
-        string getComment() { return comment; };
+        double getScore();
+        string getComment();
         
-        void showReview(){
-            cout << "Score: " << score << ", Comment: " << comment << endl;
-        }
+        void showReview();
 
-        void setScore(double score) { this->score = score; };
-        void setComment(string comment) { this->comment = comment; };
+        void setScore(double score);
+        void setComment(string comment);
 
         friend class Member;
         friend class Motorbike;
 };
+
+#endif
