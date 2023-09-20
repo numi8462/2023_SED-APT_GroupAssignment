@@ -25,7 +25,6 @@ double Motorbike::getMinimumRenterScore() { return minimumRenterScore; }
 void Motorbike::setCity(string city) { this->city = city; }
 void Motorbike::setPointsPerDay(int pointsPerDay) { this->pointsPerDay = pointsPerDay; }
 void Motorbike::setRatingAverage(double ratingAverage) { this->ratingAverage = ratingAverage; }
-void Motorbike::setBikeID(string bikeID) {this->bikeID = bikeID; }
 void Motorbike::setOwnerID(string ownerID) {this->ownerID = ownerID; }
 void Motorbike::setModel(string model) {this->model = model; }
 void Motorbike::setColor(string color) {this->color = color; }
@@ -63,8 +62,6 @@ void Motorbike::showDetailedInfo(){
   cout << "Description: " << description << endl;
   cout << "Rent: " << rent << endl;
   cout << "Rating Average: " << ratingAverage << endl;
-  cout << "Renting Start: " << rentingStart << endl;
-  cout << "Renting End: " << rentingEnd << endl;
   cout << "City: " << city << endl;
   cout << "Points Per Day: " << pointsPerDay << endl; 
   cout << "Reviews: " << endl;

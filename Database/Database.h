@@ -21,16 +21,36 @@ using namespace std;
 class Database
 {
 private:
+    Member member;
+    Admin admin;
+    
     string fileName;
     vector<Member*> members;
     vector<Motorbike*> motorbikes;
+    vector<Review*> reviews;
+    vector<Request*> requests;
 
 public:
-    Database();
-    Database(string fileName);
-    ~Database();
+    Database(){
+
+    };
 
     void displayData();
+
+    Member readMemberData(string memberID);
+    void readMotorbikeData(Motorbike &motorbike);
+
+    void getAllMembers();
+    void getAllMotorbikes();
+    void getAllReviews();
+    void getAllRequests();
+
+    void writeMemberData(Member &member);
+    void writeMotorbikeData(Motorbike &motorbike);
+    void writeReviewData(Review &review);
+    void writeRequestData(Request &request);
+
+    void replaceMemberData(string currID, Member &member);
 };
 
 #endif // DATABASE_H

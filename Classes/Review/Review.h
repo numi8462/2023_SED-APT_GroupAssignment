@@ -18,20 +18,26 @@
 using namespace std;
 class Review {
     private:
+        string reviewType;
+        string id;
         double score;
         string comment;
     public:
         Review() { };
-        Review(double score, string comment) : score(score), comment(comment) { };
+        Review(string reviewType,string id,double score, string comment) : reviewType(reviewType),id(id), score(score), comment(comment) { };
 
         //getters
         double getScore();
         string getComment();
+        string getReviewType();
+        string getID();
         
         void showReview();
 
         void setScore(double score);
         void setComment(string comment);
+        void setReviewType(string reviewType);
+        void setID(string id);
 
         friend class Member;
         friend class Motorbike;

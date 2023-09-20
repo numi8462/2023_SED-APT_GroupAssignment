@@ -59,7 +59,7 @@ void RentalService::menuMain(){
 
 // menu for guests
 void RentalService::menuGuest(){
-
+    cout << "" << endl;
 }
 
 // menu for searching bike

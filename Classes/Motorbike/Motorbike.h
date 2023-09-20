@@ -21,7 +21,6 @@ class Review;
 class Motorbike
 {
 private:
-    string bikeID;
     string ownerID;
     string model;
     string color;
@@ -31,16 +30,13 @@ private:
     string description;
     bool rent;
     double ratingAverage;
-    time_t rentingStart;
-    time_t rentingEnd;
     vector<Review*> reviews;
     string city;
     int pointsPerDay;
     double minimumRenterScore;
 public:
     Motorbike(){};
-    Motorbike(string bikeID,string ownerID, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, time_t rentingStart, time_t rentingEnd, vector<Review*> reviews, string city, int pointsPerDay, double minimumRenterScore){
-        this->bikeID = bikeID;
+    Motorbike(string ownerID, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, vector<Review*> reviews, string city, int pointsPerDay, double minimumRenterScore){
         this->ownerID = ownerID;
         this->model = model;
         this->color = color;
@@ -50,8 +46,6 @@ public:
         this->description = description;
         this->rent = rent;
         this->ratingAverage = ratingAverage;
-        this->rentingStart = rentingStart;
-        this->rentingEnd = rentingEnd;
         this->reviews = reviews;
         this->city = city;
         this->pointsPerDay = pointsPerDay;

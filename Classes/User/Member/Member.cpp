@@ -31,28 +31,37 @@ void Member::showInfo(){
     cout << "Points: " << points << endl;
     cout << "Rent Score Average: " << rentScoreAverage << endl;
     cout << "Rented Bike: " << endl;
-    rentedBike->showInfo();
+    if(rentedBike != nullptr){
+        rentedBike->showInfo();
+    } else {
+        cout << "None" << endl;
+    }
+    cout << "My Bike: " << endl;
+    if(myBike != nullptr){
+        myBike->showInfo();
+    } else {
+        cout << "None" << endl;
+    }
 }
 
 // getters
-string Member::getFullName(){
-    return fullName;
-}
-int Member::getPoints(){
-    return points;
-}
-double Member::getRentScoreAverage(){
-    return rentScoreAverage;
-}
+string Member::getMemberID(){return memberID;}
+string Member::getFullName(){return fullName;}
+string Member::getUsername(){return username;}
+string Member::getPassword(){return password;}
+int Member::getPhoneNumber(){return phoneNumber;}
+string Member::getIdType(){return idType;}
+int Member::getIdNumber(){return idNumber;}
+int Member::getLicenceNumber(){return licenceNumber;}
+string Member::getExpiryDate(){return expiryDate;}
+int Member::getPoints(){return points;}
+double Member::getRentScoreAverage(){return rentScoreAverage;}
+Request* Member::getRequest(){return myRequest;}
+Motorbike* Member::getRentedBike(){return rentedBike;}
 
-Request* Member::getRequest(){
-    return myRequest;
+void Member::setMotorbike(Motorbike& myBike){
+    this->myBike = &myBike;
 }
-
-Motorbike* Member::getRentedBike(){
-    return rentedBike;
-}
-
 void Member::pushReview(Review* review){
     rentReviews.push_back(review);
 }
@@ -136,4 +145,20 @@ double Member::getAverageScore(){
     return rentScoreAverage;
 }
 
+
+void Member::writeReview(Member& member){
+    Review* review = new Review;
+    int score;
+    string comment;
+
+    cout << "\nPlease write the review for the renter:" << endl;
+    cout << "Score (1-10): ";
+    cin >> score;
+    cin.ignore(1);
+    cout << "Write comment: ";
+    getline(cin,comment);
+    review->setScore(score);
+    review->setComment(comment);
+    member.pushReview(review);
+}
 
