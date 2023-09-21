@@ -21,65 +21,37 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
   /* code */
+    // Motorbike 
+    // bike1("r1","m1","Suzuki SV650","","","","","",false,5,0,0,vector<Review*>{},"Hanoi",1,5),
+    // bike2("r2","John","Triumph Tiger","","","","","",false,2,0,0,vector<Review*>{},"Hanoi",2,7),
+    // bike3("r2","John","Honda Trail 125","","","","","",false,2,0,0,vector<Review*>{},"Hanoi",3,5),
+    // bike4("r2","John","Honda CRF 300L Rally ABS","","","","","",false,2,0,0,vector<Review*>{},"Hanoi",4,5),
+    // bike5("r2","John","Yamaha XT 250","","","","","",false,2,0,0,vector<Review*>{},"Hochiminh",1,7),
+    // bike6("r2","John","Kawasaki Ninja","","","","","",false,2,0,0,vector<Review*>{},"Hochiminh",2,5),
+    // bike7("r2","John","Honda CRF 110F","","","","","",false,2,0,0,vector<Review*>{},"Hochiminh",3,5),
+    // bike8("r2","John","Yamaha YZF R1","","","","","",false,2,0,0,vector<Review*>{},"Hochiminh",4,5);
 
-  Motorbike 
-  bike1("r1","m1","Suzuki SV650","","","","","",false,5,0,0,vector<Review*>{},"Hanoi",1,5),
-  bike2("r2","John","Triumph Tiger","","","","","",false,2,0,0,vector<Review*>{},"Hanoi",2,7),
-  bike3("r2","John","Honda Trail 125","","","","","",false,2,0,0,vector<Review*>{},"Hanoi",3,5),
-  bike4("r2","John","Honda CRF 300L Rally ABS","","","","","",false,2,0,0,vector<Review*>{},"Hanoi",4,5),
-  bike5("r2","John","Yamaha XT 250","","","","","",false,2,0,0,vector<Review*>{},"Hochiminh",1,7),
-  bike6("r2","John","Kawasaki Ninja","","","","","",false,2,0,0,vector<Review*>{},"Hochiminh",2,5),
-  bike7("r2","John","Honda CRF 110F","","","","","",false,2,0,0,vector<Review*>{},"Hochiminh",3,5),
-  bike8("r2","John","Yamaha YZF R1","","","","","",false,2,0,0,vector<Review*>{},"Hochiminh",4,5);
-
-
-  Request request1;
-  Review r1(5,""),r2(6,"");
-  Member m1("Alice", "username", "password",222,222, "expiryDate");
+    Database database;
 
 
+    Member m1("MEM1","Alice", "username", "password",222,"Citizen ID",333, 222,"expiryDate",10,6);
+    Member m2("MEM2","Bob", "username", "password",222,"Citizen ID",444, 222,"expiryDate",10,5);
 
-  // @test for renting bike and write review for bike
-  m1.setMyRequest(request1);
-  m1.getRequest()->setStatus(true);
-  m1.rentBike(bike1);
-  m1.getRentedBike()->showInfo();
+    Motorbike b1("MEM1","yamada","red","enginesize","mode","yearmade","description",false,10,"Hanoi",5,8);
+    Motorbike b2("MEM2","Honda","blue","enginesize","mode","yearmade","description",false,9,"Hanoi",6,5);
 
-  // if(m1.getRequest()->getStatus() == true){
-  //   m1.writeReview();
-  // }
-  // bike1.showRentReviews();
-  
-  // m1.pushReview(&r1);
-  // m1.pushReview(&r2);
+    // database.writeMemberData(m1);
+    // database.writeMemberData(m2);
 
-  // m1.showMemberReviews();
-  
+    // database.readMemberData("MEM2").showInfo();
 
+    // database.replaceMemberData("MEM2",m2);
 
+    // database.getAllMembers();
+    // database.writeMotorbikeData(b1);
+    // database.writeMotorbikeData(b2);
 
-  // @test for rent if request true
-  // request1.setStatus(true);
-  // m1.setMyRequest(request1);
-  // m1.rentBike(bike1);
-
-  // // @testing menu
-  // rs.menuMain();
-  // int choice;
-  // cin >> choice;
-  // switch (choice)
-  // {
-  //   case 1:
-  //     break;
-  //   case 2:
-  //     rs.menuMember(o1);
-  //     break;
-  //   case 3:
-  //     break;
-  //   default:
-  //     cout << "Invalid Choice" << endl;
-  //     break;
-  // }
-
-  return 0;
+    // database.readBikeData("MEM2").showDetailedInfo();
+    database.getAllMotorbikes();
+    return 0;
 }

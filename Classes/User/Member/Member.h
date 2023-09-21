@@ -39,31 +39,52 @@ class Member {
         Motorbike *myBike;
     public:
         Member(){};
-        Member( string fullName, string username, string password, int phoneNumber, int licence, string expiryDate){
+        Member( string memberID,string fullName, string username, string password, int phoneNumber, string idType,int idNumber,int licenceNumber, string expiryDate, int points, double rentScoreAverage){
+            this->memberID = memberID;
             this->fullName = fullName;
             this->username = username;
             this->password = password;
             this->phoneNumber = phoneNumber;
-            this->licenceNumber = licence;
+            this->idType = idType;
+            this->idNumber = idNumber;
+            this->licenceNumber = licenceNumber;
             this->expiryDate = expiryDate;
-            this->points = 20;
-            this->rentScoreAverage = 10;
+            this->points = points;
+            this->rentScoreAverage = rentScoreAverage;
             this->rentedBike = nullptr;
             this->myRequest = nullptr;
             this->rentReviews = {};
+            this->listOfRequests = {};
+            this->myBike = nullptr;
         };
         virtual ~Member() {}
         // shows member information
         void showInfo();
         
         // getters
+        string getMemberID();
         string getFullName();
+        string getUsername();
+        string getPassword();
+        int getPhoneNumber();
+        string getIdType();
+        int getIdNumber();
+        int getLicenceNumber();
+        string getExpiryDate();
         int getPoints();
         double getRentScoreAverage();
-
-        Request* getRequest();
-
         Motorbike* getRentedBike();
+        Request* getRequest();
+        vector<Review*> getRentReviews();
+        vector<Request*> getListOfRequests();
+        Motorbike *getMyBike();
+        
+        
+        
+
+
+        
+
 
         void pushReview(Review* review);
 
@@ -90,6 +111,10 @@ class Member {
         // calculate average rating score
         double getAverageScore();
 
+        void writeReview(Member &member);
+        void setMotorbike(Motorbike &motorbike);
+
+        friend class Database;
 };
 
 #endif

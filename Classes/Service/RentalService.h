@@ -38,9 +38,7 @@ public:
     void menuMain();
 
     // menu for guests
-    void menuGuest(){
-
-    }
+    void menuGuest();
 
     // menu for searching bike
     void menuSearchBike(Member& member);

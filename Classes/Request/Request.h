@@ -46,16 +46,21 @@ class Motorbike;
 // };
 class Request {
     private:
-        Member* renter;
-        Motorbike* rentalBike;
+        string renterID;
+        string ownerID;
         // Date start;
         // Date end;
         int credit;
         bool status;
+        bool decline;
     public:
     //default constructor
-        Request(){
-          status = false;
+        Request(string renterID, string ownerID, int credit, bool status,bool decline){
+          this->renterID = renterID;
+          this->ownerID = ownerID;
+          this->credit = credit;
+          this->status = false;
+          this->decline = false;
         };
         
     // Parameterized constructor
@@ -66,13 +71,19 @@ class Request {
         //   this->endTime = endTime;
         //   status = false;
         // }
-    //Getter method to get the status
-        bool getStatus();
-        // sets the required amount of credit for rent
-        void setCredit(int credit);
 
-        // sets request status
+        //Getter
+        bool getStatus();
+        int getCredit();
+        string getRenterID();
+        string getOwnerID();
+        bool getDecline();
+        // setter
+        void setCredit(int credit);
         void setStatus(bool status);
+        void setDecline(bool decline);
+        void setRenterID(string renterID);
+        void setOwnerID(string ownerID);
 
         friend class Member;
 };
