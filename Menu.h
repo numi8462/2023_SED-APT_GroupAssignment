@@ -1,5 +1,5 @@
 #ifndef RENTALSERVICE_H
-#define MRENTALSERVICE_H
+#define RENTALSERVICE_H
 #include "../User/Member/Member.cpp"
 #include <iostream>
 #include <vector>
