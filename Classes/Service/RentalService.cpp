@@ -177,37 +177,46 @@ void RentalService::viewBikeReviews(string id){
 
 
 };
+// creates a new request if member does not have a pending request
 void RentalService::createRequest(string renterID, string ownerID){
-    Request* request = new Request;
-    int points = 0;
-    int days = 0;
-    int total = 0;
-    cout << "Type the amount of days to rent:";
-    cin >> days;
-    for(auto bike : motorbikes){
-        if(bike.getOwnerID() == ownerID){
-            points = bike.getPointsPerDay();
+    bool hasRequest = false;
+    for(auto rq : requests){
+        if(rq.getRenterID() == renterID){
+            cout << "\n\033[31m You already have a pending request \033[0m" << endl;
+            hasRequest = true;
+            break;
         }
     }
-    total = days * points;
-    for(auto m : members){
-        if(m.getMemberID() == renterID){
-            int myPoints = m.getPoints();
-            if(myPoints < total){
-                cout << "Not enough credit. Please charge credits" << endl;
-            } else {
-                cout <<"Request sent to Owner" << endl;
-                request->setRenterID(renterID);
-                request->setOwnerID(ownerID);
-                request->setCredit(total);
-                request->setStatus(false);
-                request->setDecline(false);
-                requests.push_back(*request);
+    if(hasRequest == false){
+        Request* request = new Request;
+        int points = 0;
+        int days = 0;
+        int total = 0;
+        cout << "Type the amount of days to rent:";
+        cin >> days;
+        for(auto bike : motorbikes){
+            if(bike.getOwnerID() == ownerID){
+                points = bike.getPointsPerDay();
+            }
+        }
+        total = days * points;
+        for(auto m : members){
+            if(m.getMemberID() == renterID){
+                int myPoints = m.getPoints();
+                if(myPoints < total){
+                    cout << "Not enough credit. Please charge credits" << endl;
+                } else {
+                    cout <<"Request sent to Owner" << endl;
+                    request->setRenterID(renterID);
+                    request->setOwnerID(ownerID);
+                    request->setCredit(total);
+                    request->setStatus(false);
+                    request->setDecline(false);
+                    requests.push_back(*request);
+                }
             }
         }
     }
-    
-
 };
 void RentalService::acceptRequest(string ownerID){
     for(auto rq : requests){
@@ -231,28 +240,32 @@ void RentalService::declineRequest(string ownerID){
         }
     }
 };
+// checks status of request
 void RentalService::checkRequest(string renterID){
     int index = 0;
     int found = 0;
     for(auto rq : requests){
         if(rq.getRenterID() == renterID){
             if(rq.getDecline() == true){
-                cout << "Your Request have been Declined." << endl;
+                cout << "\n Your Request have been Declined." << endl;
                 requests.erase(requests.begin() + index);
                 found = 1;
+                break;
             } else if(rq.getStatus() == false){
-                cout << "Your Request is pending" << endl;
+                cout << "\n Your Request is pending" << endl;
                 found = 1;
+                break;
             } else {
-                cout << "Your Request have been Accepted." << endl;
+                cout << "\n Your Request have been Accepted." << endl;
                 found = 1;
+                break;
             }
         }
         index++;
     }
 
     if(found == 0){
-        cout << "No request found" << endl;
+        cout << "\n No request found" << endl;
     }
 };
 
@@ -363,21 +376,13 @@ void RentalService::menuMember(Member &member){
             viewRentedBike(member.getMemberID());
             break;
         case 3:
-            bool hasRequest = false;
-            for(auto rq : requests){
-                if(rq.getRenterID() == member.getMemberID()){
-                    cout << "You already have a pending request" << endl;
-                    hasRequest = true;
-                }
-            }
-            if(hasRequest == false){
-                menuSearchBike(member);
-            }
+            menuSearchBike(member);
             choice = 0;
             break;
         case 4:
             break;
         case 5:
+            checkRequest(member.getMemberID());
             break;
         case 6:
             break;
