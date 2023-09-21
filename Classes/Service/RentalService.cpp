@@ -52,6 +52,7 @@ void RentalService::menuMain(){
     cout << "Group: Group No. 25" << endl;
     cout << "s3726115, Youngho Kim" << endl;
     cout << "s3790421, Kien Chau" << endl;
+     cout << "s3976442, Thien Do" << endl;
     cout << "s3979772, Tri Ngo\n" << endl;
     cout << "Use the app as 1.Guest   2.Member    3.Admin\n" << endl;
     cout << "Enter your choice: ";
