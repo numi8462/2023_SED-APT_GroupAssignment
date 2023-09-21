@@ -18,32 +18,7 @@ using namespace std;
 
 class Member;
 class Motorbike;
-// class Date {
-//     private:
-//         string requestID;
-//         int year;
-//         int month;
-//         int day;
-//     public:
-//         // Default constructor
-//         Date() {
-//             time_t now = time(0);
-//             tm* currentDate = localtime(&now);
-//             year = currentDate->tm_year + 1950; // Adjust for year starting from 1950
-//             month = currentDate->tm_mon + 1; // Adjust for month starting from 0
-//             day = currentDate->tm_mday;
-//         }
-//         // Parameterized constructor
-//         Date(int year, int month, int day);
-        
-//         // Get the year value
-//         int getYear() const;
-//         //Get the month value
-//         int getMonth() const;
-//         //Get the day value
-//         int getDay() const;
-//         int operator-(const Date &d);
-// };
+
 class Request {
     private:
         string renterID;
@@ -54,7 +29,8 @@ class Request {
         bool status;
         bool decline;
     public:
-    //default constructor
+        //default constructor
+        Request(){};
         Request(string renterID, string ownerID, int credit, bool status,bool decline){
           this->renterID = renterID;
           this->ownerID = ownerID;
@@ -62,21 +38,12 @@ class Request {
           this->status = false;
           this->decline = false;
         };
-        
-    // Parameterized constructor
-        // Request(Member renter, Motorbike rentalBike, Date startTime, Date endTime) {
-        //   this->renter = renter;
-        //   this->rentalBike = rentalBike;
-        //   this->startTime = startTime;
-        //   this->endTime = endTime;
-        //   status = false;
-        // }
 
         //Getter
-        bool getStatus();
-        int getCredit();
         string getRenterID();
         string getOwnerID();
+        int getCredit();
+        bool getStatus();
         bool getDecline();
         // setter
         void setCredit(int credit);

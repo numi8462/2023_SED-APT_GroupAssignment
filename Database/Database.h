@@ -23,22 +23,31 @@ class Database
 private:
     vector<Member> members;
     vector<Motorbike> motorbikes;
-    vector<Review> reviews;
+    vector<Review> renterReviews;
+    vector<Review> bikeReviews;
     vector<Request> requests;
 
 public:
     Database(){
       this->members = members;
       this->motorbikes = motorbikes;
-      this->reviews = reviews;
+      this->renterReviews = renterReviews;
+      this->bikeReviews = bikeReviews;
       this->requests = requests;
     };
 
-    vector<Member> getMembers();
+    vector<Member> getMembersVector();
+    vector<Motorbike> getMotorbikesVector();
+    vector<Review> getRenterReviewsVector();
+    vector<Review> getBikeReviewsVector();
+    vector<Request> getRequestsVector();
+
     void displayData();
 
     Member readMemberData(string memberID);
     Motorbike readBikeData(string ownerID);
+    Review readRenterReviewData(string memberID);
+    Review readBikeReviewData(string memberID);
 
     void getAllMembers();
     void getAllMotorbikes();
@@ -51,6 +60,7 @@ public:
     void writeRequestData(Request &request);
 
     void replaceMemberData(string currID, Member &member);
+    // void replaceMotorbikeData();
 
 };
 
