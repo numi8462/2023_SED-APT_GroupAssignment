@@ -41,6 +41,7 @@ public:
     vector<Review> getBikeReviewsVector();
     vector<Request> getRequestsVector();
 
+    void deleteDatabase();
     void displayData();
 
     Member readMemberData(string memberID);

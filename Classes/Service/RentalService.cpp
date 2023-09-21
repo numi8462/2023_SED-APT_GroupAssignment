@@ -36,7 +36,23 @@ void RentalService::getDataFromDatabase(){
 }
 // saves data to database
 void RentalService::saveDataToDatabase(){
-
+    Database database;
+    database.deleteDatabase();
+    for(auto m : members){
+        database.writeMemberData(m);
+    }
+    for(auto mb : motorbikes){
+        database.writeMotorbikeData(mb);
+    }
+    for(auto rq : requests){
+        database.writeRequestData(rq);
+    }
+    for(auto rv : renterReviews){
+        database.writeReviewData(rv);
+    }
+    for(auto rvb : bikeReviews){
+        database.writeReviewData(rvb);
+    }
 };
 
 // register guest to member
@@ -92,6 +108,7 @@ void RentalService::writeReviewForRenter(string renterID){
     review->setComment(comment);
     review->setID(renterID);
     renterReviews.push_back(*review);
+    saveDataToDatabase();
 };
 void RentalService::writeReviewForBike(string ownerID){
     Review* review = new Review;
@@ -110,6 +127,7 @@ void RentalService::writeReviewForBike(string ownerID){
     review->setComment(comment);
     review->setID(ownerID);
     bikeReviews.push_back(*review);
+    saveDataToDatabase();
 };
 
 // set average renter score, if non default is 10
@@ -217,6 +235,7 @@ void RentalService::createRequest(string renterID, string ownerID){
             }
         }
     }
+    saveDataToDatabase();
 };
 void RentalService::acceptRequest(string ownerID){
     for(auto rq : requests){
@@ -231,7 +250,7 @@ void RentalService::acceptRequest(string ownerID){
             }
         }
     }
-
+    saveDataToDatabase();
 };
 void RentalService::declineRequest(string ownerID){
     for(auto rq : requests){
@@ -239,6 +258,7 @@ void RentalService::declineRequest(string ownerID){
             rq.setDecline(true);
         }
     }
+    saveDataToDatabase();
 };
 // checks status of request
 void RentalService::checkRequest(string renterID){
@@ -246,6 +266,7 @@ void RentalService::checkRequest(string renterID){
     int found = 0;
     for(auto rq : requests){
         if(rq.getRenterID() == renterID){
+            cout << "Found Reqeust" << endl;
             if(rq.getDecline() == true){
                 cout << "\n Your Request have been Declined." << endl;
                 requests.erase(requests.begin() + index);
@@ -267,6 +288,7 @@ void RentalService::checkRequest(string renterID){
     if(found == 0){
         cout << "\n No request found" << endl;
     }
+    
 };
 
 // shows list of motorbikes which filters by city, points, and member's rating
@@ -416,4 +438,16 @@ void RentalService::menuRentBike(Member& member,string bikeOwnerID){
     }
 }
 
+void RentalService::menuRequest(Member& member){
+    int number = 0;
+    int index = 0;
+    cout << "List of Requests:" << endl;
+    for(auto rq : requests){
+        if(rq.getOwnerID() == member.getMemberID()){
+            cout << number << ". ";
+            number++;
+        }
+        index++;
+    }
+};
 

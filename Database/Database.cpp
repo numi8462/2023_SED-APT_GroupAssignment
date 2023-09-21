@@ -35,12 +35,24 @@ vector<Request> Database::getRequestsVector(){return requests;}
 //     }
 // };
 
+void Database::deleteDatabase(){
+    ofstream ofs;
+    ofs.open("Database/Members.dat", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    ofs.open("Database/Motorbikes.dat", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    ofs.open("Database/Requests.dat", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    ofs.open("Database/Reviews.dat", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+}
+
 //writes member data to Members.dat file
 void Database::writeMemberData(Member &member){
     ofstream outFile("Database/Members.dat",ios::app);
     outFile << member.getMemberID() << "," << member.getFullName() << "," << member.getUsername() << "," << member.getPassword() << "," << member.getPhoneNumber() << "," << member.getIdType() << "," << member.getIdNumber() << "," << member.getLicenceNumber() << "," << member.getExpiryDate() << "," << member.getPoints() << "," << member.getRentScoreAverage() << "," << member.getRentStatus() <<"\n";
     outFile.close();
-    cout << "File saved" << endl;
+    // cout << "File saved" << endl;
 }
 
 // write bike data
@@ -48,7 +60,7 @@ void Database::writeMotorbikeData(Motorbike &motorbike){
     ofstream outFile("Database/Motorbikes.dat",ios::app);
     outFile << motorbike.getOwnerID() << "," << motorbike.getModel() << "," << motorbike.getColor() << "," << motorbike.getEngineSize() << "," << motorbike.getMode() << "," << motorbike.getYearMade() << "," << motorbike.getDescription() << "," << motorbike.getRent() << "," << motorbike.getRatingAverage() << "," << motorbike.getCity() << "," << motorbike.getPointsPerDay() << "," << motorbike.getMinimumRenterScore() << "\n";
     outFile.close();
-    cout << "File saved" << endl; 
+    // cout << "File saved" << endl; 
 }
 
 //writes review data
@@ -56,14 +68,14 @@ void Database::writeReviewData(Review &review) {
     ofstream outFile("Database/Reviews.dat",ios::app);
     outFile << review.getReviewType() << "," << review.getID() << "," << review.getScore() << "," << review.getComment() << "\n";
     outFile.close();
-    cout << "File saved" << endl;
+    // cout << "File saved" << endl;
 }
 // writes request data
 void Database::writeRequestData(Request &request) {
     ofstream outFile("Database/Requests.dat",ios::app);
     outFile << request.getRenterID() << "," << request.getOwnerID() << "," << request.getCredit() << "," << request.getStatus() << "," << request.getDecline() << "\n";
     outFile.close();
-    cout << "File saved" << endl;
+    // cout << "File saved" << endl;
 }
 
 //reads the current member data
@@ -429,9 +441,9 @@ void Database::getAllRequests(){
         ownerID = field;
         getline(inFile,field,',');
         credit = stod(field);
-        getline(inFile,field,'\n');
-        status = (field == "1");
         getline(inFile,field,',');
+        status = (field == "1");
+        getline(inFile,field,'\n');
         decline = (field == "1");
 
 

@@ -75,7 +75,8 @@ public:
     //menu for renting bike
     void menuRentBike(Member& member,string bikeOwnerID);
 
-    
+    // menu for requests
+    void menuRequest(Member& member);
 
 };
 
