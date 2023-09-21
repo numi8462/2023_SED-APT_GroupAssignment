@@ -46,6 +46,16 @@ class Owner : public Member {
             review->setComment(comment);
             member.pushReview(review);
         }
+      //Use to deduct points from the member when a request is accepted by the owner
+      void acceptRequest(Request &request) {
+          if (request.renter->getPoints() >= request.credit) {
+              request.status = true;
+              request.renter->creditDeduction(request.credit);
+              cout << "Request accepted!" << endl;
+          } else {
+              cout << "The renter does not have enough points!" << endl;
+          }
+      }
 
         // sets my motobike that is for rent
         void setMotorbike(Motorbike &myBike){
