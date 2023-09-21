@@ -13,13 +13,21 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
-
+using namespace std;
 
 // getters
+string Motorbike::getOwnerID(){return ownerID;}
+string Motorbike::getModel(){return model;}
+string Motorbike::getColor(){return color;}
+string Motorbike::getEngineSize(){return engineSize;}
+string Motorbike::getMode(){return mode;}
+string Motorbike::getYearMade(){return yearMade;}
+string Motorbike::getDescription(){return description;}
+bool Motorbike::getRent(){return rent;}
+double Motorbike::getRatingAverage(){return ratingAverage;}
 string Motorbike::getCity(){return city;}
 int Motorbike::getPointsPerDay(){return pointsPerDay;}
-double Motorbike::getRatingAverage(){return ratingAverage;}
-double Motorbike::getMinimumRenterScore() { return minimumRenterScore; }
+double Motorbike::getMinimumRenterScore(){return minimumRenterScore;}
 
 //setters
 void Motorbike::setCity(string city) { this->city = city; }
@@ -53,6 +61,7 @@ void Motorbike::pushReview(Review* review){
 
 // shows motorbike info
 void Motorbike::showDetailedInfo(){
+  string status;
   cout << "Owner: " << ownerID << endl;
   cout << "Model: " << model << endl;
   cout << "Color: " << color << endl;
@@ -60,14 +69,25 @@ void Motorbike::showDetailedInfo(){
   cout << "Mode: " << mode << endl;
   cout << "Year Made: " << yearMade << endl;
   cout << "Description: " << description << endl;
-  cout << "Rent: " << rent << endl;
+  if(rent == 1){
+    status = "Rented bike";
+  } else {
+    status = "No rented bike";
+  }
+  cout << "Rent Status: " << status << endl;
   cout << "Rating Average: " << ratingAverage << endl;
   cout << "City: " << city << endl;
   cout << "Points Per Day: " << pointsPerDay << endl; 
+  cout << "Minimum Renter Score: " << minimumRenterScore << endl;
   cout << "Reviews: " << endl;
-  for(int i = 0; i < reviews.size(); i++){
-    reviews[i]->showReview();
+  if(!reviews.empty()){
+    for(int i = 0; i < reviews.size(); i++){
+      reviews[i]->showReview();
+    }
+  } else {
+    cout << "None" << endl;
   }
+
 }
 
 // shows brief info of bike

@@ -30,13 +30,15 @@ private:
     string description;
     bool rent;
     double ratingAverage;
-    vector<Review*> reviews;
     string city;
     int pointsPerDay;
     double minimumRenterScore;
+
+    vector<Review*> reviews;
+
 public:
     Motorbike(){};
-    Motorbike(string ownerID, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, vector<Review*> reviews, string city, int pointsPerDay, double minimumRenterScore){
+    Motorbike(string ownerID, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, string city, int pointsPerDay, double minimumRenterScore){
         this->ownerID = ownerID;
         this->model = model;
         this->color = color;
@@ -46,16 +48,24 @@ public:
         this->description = description;
         this->rent = rent;
         this->ratingAverage = ratingAverage;
-        this->reviews = reviews;
+        this->reviews = {};
         this->city = city;
         this->pointsPerDay = pointsPerDay;
         this->minimumRenterScore = minimumRenterScore;
     };
 
     // getters
+    string getOwnerID();
+    string getModel();
+    string getColor();
+    string getEngineSize();
+    string getMode();
+    string getYearMade();
+    string getDescription();
+    bool getRent();
+    double getRatingAverage();
     string getCity();
     int getPointsPerDay();
-    double getRatingAverage();
     double getMinimumRenterScore() ;
 
     //setters

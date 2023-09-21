@@ -6,7 +6,8 @@
   Group: 25
   Compiler used: Compiler version g++ 9.2.0
   Created  date: 14/09/2023
-  Acknowledgement: 
+  Acknowledgement: https://www.daniweb.com/programming/software-development/threads/37710/reading-dat-file-data-into-an-array
+
 */
 
 #include "Database.h"
@@ -17,14 +18,19 @@
 #include <sstream>
 using namespace std;
 
-void Database::displayData(){
-    for(int i = 0; i < members.size(); i++){
-        members[i]->showInfo();
-    }
-    for(int i = 0; i < motorbikes.size(); i++){
-        motorbikes[i]->showInfo();
-    }
-};
+vector<Member> Database::getMembers(){
+    return members;
+}
+
+
+// void Database::displayData(){
+//     for(int i = 0; i < members.size(); i++){
+//         members[i]->showInfo();
+//     }
+//     for(int i = 0; i < motorbikes.size(); i++){
+//         motorbikes[i].showInfo();
+//     }
+// };
 
 //writes member data to Members.dat file
 void Database::writeMemberData(Member &member){
@@ -32,6 +38,14 @@ void Database::writeMemberData(Member &member){
     outFile << member.getMemberID() << "," << member.getFullName() << "," << member.getUsername() << "," << member.getPassword() << "," << member.getPhoneNumber() << "," << member.getIdType() << "," << member.getIdNumber() << "," << member.getLicenceNumber() << "," << member.getExpiryDate() << "," << member.getPoints() << "," << member.getRentScoreAverage() << "\n";
     outFile.close();
     cout << "File saved" << endl;
+}
+
+// write bike data
+void Database::writeMotorbikeData(Motorbike &motorbike){
+    ofstream outFile("Database/Motorbikes.dat",ios::app);
+    outFile << motorbike.getOwnerID() << "," << motorbike.getModel() << "," << motorbike.getColor() << "," << motorbike.getEngineSize() << "," << motorbike.getMode() << "," << motorbike.getYearMade() << "," << motorbike.getDescription() << "," << motorbike.getRent() << "," << motorbike.getRatingAverage() << "," << motorbike.getCity() << "," << motorbike.getPointsPerDay() << "," << motorbike.getMinimumRenterScore() << "\n";
+    outFile.close();
+    cout << "File saved" << endl; 
 }
 
 //reads the current member data
@@ -89,6 +103,64 @@ Member Database::readMemberData(string currID){
     return curr;
 }
 
+//reads current bike data
+Motorbike Database::readBikeData(string id){
+    ifstream inFile;
+    inFile.open("Database/Motorbikes.dat");
+
+    Motorbike currBike;
+    string line;
+
+    string ownerID;
+    string model;
+    string color;
+    string engineSize;
+    string mode;
+    string yearMade;
+    string description;
+    bool rent;
+    double ratingAverage;
+    string city;
+    int pointsPerDay;
+    double minimumRenterScore;
+
+    while(inFile.peek()!=EOF){
+
+        string field;
+        getline(inFile,field,',');
+        ownerID = field;
+        getline(inFile,field,',');
+        model = field;
+        getline(inFile,field,',');
+        color = field;
+        getline(inFile,field,',');
+        engineSize = field;
+        getline(inFile,field,',');
+        mode = field;
+        getline(inFile,field,',');
+        yearMade = field;
+        getline(inFile,field,',');
+        description = field;
+        getline(inFile,field,',');
+        rent = (field == "1");
+        getline(inFile,field,',');
+        ratingAverage = stod(field);
+        getline(inFile,field,',');
+        city = field;
+        getline(inFile,field,',');
+        pointsPerDay = stoi(field);
+        getline(inFile,field,'\n');
+        minimumRenterScore = stod(field);
+        if(ownerID == id){
+            Motorbike bike(ownerID, model, color, engineSize, mode, yearMade, description, rent, ratingAverage, city, pointsPerDay, minimumRenterScore);
+            currBike = bike;
+            break;
+        }
+    }  
+    inFile.close();
+    return currBike;
+}
+
 // replaces data if string id matches the Member class
 void Database::replaceMemberData(string currID, Member& newMember){
     ifstream inFile;
@@ -121,6 +193,126 @@ void Database::replaceMemberData(string currID, Member& newMember){
     remove("Database/Members.dat");
     rename("Database/temp.dat", "Database/Members.dat");
 }
-void Database::readMotorbikeData(Motorbike &motorbike){
+// replaces data if string id matches the motorbike class
 
+
+// returns all members
+void Database::getAllMembers(){
+    members.clear();
+
+    ifstream inFile;
+    inFile.open("Database/Members.dat");
+
+    Member curr;
+    string line;
+
+    string memberID;
+    string fullName;
+    string username;
+    string password;
+    int phoneNumber;
+    string idType;
+    int idNumber;
+    int licenceNumber;
+    string expiryDate;
+    int points;
+    double rentScoreAverage;
+
+    while(inFile.peek()!=EOF){
+
+        string field;
+        getline(inFile,field,',');
+        memberID = field;
+        getline(inFile,field,',');
+        fullName = field;
+        getline(inFile,field,',');
+        username = field;
+        getline(inFile,field,',');
+        password = field;
+        getline(inFile,field,',');
+        phoneNumber = stoi(field);
+        getline(inFile,field,',');
+        idType = field;
+        getline(inFile,field,',');
+        idNumber = stoi(field);
+        getline(inFile,field,',');
+        licenceNumber = stoi(field);
+        getline(inFile,field,',');
+        expiryDate = field;
+        getline(inFile,field,',');
+        points = stoi(field);
+        getline(inFile,field,'\n');
+        rentScoreAverage = stod(field);
+
+        Member member(memberID,fullName,username,password,phoneNumber,idType,idNumber,licenceNumber,expiryDate,points,rentScoreAverage);
+        curr = member;
+        members.push_back(curr);
+    }
+    inFile.close();
+
+    for(auto m : members){
+        m.showInfo();
+        cout << "\n";
+    }
+}
+// returns all bikes
+void Database::getAllMotorbikes(){
+    ifstream inFile;
+    inFile.open("Database/Motorbikes.dat");
+
+    Motorbike currBike;
+    string line;
+
+    string ownerID;
+    string model;
+    string color;
+    string engineSize;
+    string mode;
+    string yearMade;
+    string description;
+    bool rent;
+    double ratingAverage;
+    string city;
+    int pointsPerDay;
+    double minimumRenterScore;
+
+    while(inFile.peek()!=EOF){
+
+        string field;
+        getline(inFile,field,',');
+        ownerID = field;
+        getline(inFile,field,',');
+        model = field;
+        getline(inFile,field,',');
+        color = field;
+        getline(inFile,field,',');
+        engineSize = field;
+        getline(inFile,field,',');
+        mode = field;
+        getline(inFile,field,',');
+        yearMade = field;
+        getline(inFile,field,',');
+        description = field;
+        getline(inFile,field,',');
+        rent = (field == "1");
+        getline(inFile,field,',');
+        ratingAverage = stod(field);
+        getline(inFile,field,',');
+        city = field;
+        getline(inFile,field,',');
+        pointsPerDay = stoi(field);
+        getline(inFile,field,'\n');
+        minimumRenterScore = stod(field);
+
+        Motorbike bike(ownerID, model, color, engineSize, mode, yearMade, description, rent, ratingAverage, city, pointsPerDay, minimumRenterScore);
+        currBike = bike;
+        motorbikes.push_back(bike);
+
+    }  
+    inFile.close();
+
+    for(auto b : motorbikes){
+        b.showDetailedInfo();
+        cout << "\n";
+    }
 }
