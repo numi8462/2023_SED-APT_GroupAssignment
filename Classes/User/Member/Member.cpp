@@ -30,18 +30,6 @@ void Member::showInfo(){
     cout << "Expiry Date: " << expiryDate << endl;
     cout << "Points: " << points << endl;
     cout << "Rent Score Average: " << rentScoreAverage << endl;
-    cout << "Rented Bike: " << endl;
-    if(rentedBike != nullptr){
-        rentedBike->showInfo();
-    } else {
-        cout << "None" << endl;
-    }
-    cout << "My Bike: " << endl;
-    if(myBike != nullptr){
-        myBike->showInfo();
-    } else {
-        cout << "None" << endl;
-    }
 }
 
 // getters
@@ -56,99 +44,24 @@ int Member::getLicenceNumber(){return licenceNumber;}
 string Member::getExpiryDate(){return expiryDate;}
 int Member::getPoints(){return points;}
 double Member::getRentScoreAverage(){return rentScoreAverage;}
-Request* Member::getRequest(){return myRequest;}
-Motorbike* Member::getRentedBike(){return rentedBike;}
+bool Member::getRentStatus(){return rentStatus;};
 
-void Member::setMotorbike(Motorbike& myBike){
-    this->myBike = &myBike;
-}
-void Member::pushReview(Review* review){
-    rentReviews.push_back(review);
-}
+//setters
 
-// sets my request if Member sends rent request
-void Member::setMyRequest(Request &request){
-    this->myRequest = &request;
-}
-
-// rents bike if request status is true
-void Member::rentBike(Motorbike &rentedBike){
-    if(myRequest->status == true){
-        // rentedBike.setRentStatus(true);
-        this->rentedBike = &rentedBike;
-        cout <<"Motorbike Rented successfully!" << endl;
-    } else {
-        cout << "Your request is not accepted yet!" << endl;
-    }
-    
-}
-
-// writes review for bike
-void Member::writeReview(){
-    Review* review = new Review;
-
-    int score;
-    string comment;
-
-    cout << "Please write the review for rented bike:" << endl;
-    cout << "Score (1-10): ";
-    cin >> score;
-    cin.ignore(1);
-    cout << "Write comment: ";
-    getline(cin,comment);
-    review->setScore(score);
-    review->setComment(comment);
-    rentedBike->pushReview(review);
-}
-// deduct credit if rented successfully
-void Member::creditDeduction(int credit){
-    this->points = this->points - credit;
-}
-// charge credit
-void Member::chargeCredit(){
-
-}
-// add credit if motorbike is rented
-void Member::addCredit(){
-
-}
-
-// show my reviews from Owners
-void Member::showMemberReviews(){
-    cout << "\n<    Reviews I received    >" << endl;
-    cout << "My average rating: " << getAverageScore() << endl;
-    for(int i = 0; i < rentReviews.size(); i++){
-        cout << i+1 << ". ";
-        rentReviews[i]->showReview();
-    }
-}
-
-// calculate average rating score
-double Member::getAverageScore(){
-    double total = 0;
-    int index = 0;
-    for(int i =0; i < rentReviews.size(); i++){
-        total += rentReviews[i]->getScore();
-        index++;
-    }
-    this->rentScoreAverage = total / index;
-    return rentScoreAverage;
-}
+void Member::setMemberID(string memberID){this->memberID = memberID;}
+void Member::setFullName(string fullName){this->fullName = fullName;}
+void Member::setUsername(string username){this->username = username;}
+void Member::setPassword(string password){this->password = password;}
+void Member::setPhoneNumber(int phoneNumber){this->phoneNumber = phoneNumber;}
+void Member::setIdType(string idType){this->idType = idType;}
+void Member::setIdNumber(int idNumber){this->idNumber = idNumber;}
+void Member::setLicenceNumber(int licenceNumber){this->licenceNumber = licenceNumber;}
+void Member::setExpiryDate(string expiryDate){this->expiryDate = expiryDate;}
+void Member::setPoints(int points){this->points = points;}
+void Member::setRentScoreAverage(double rentScoreAverage){this->rentScoreAverage = rentScoreAverage;}
+void Member::setRentStatus(bool status){this->rentStatus = rentStatus;}
 
 
-void Member::writeReview(Member& member){
-    Review* review = new Review;
-    int score;
-    string comment;
 
-    cout << "\nPlease write the review for the renter:" << endl;
-    cout << "Score (1-10): ";
-    cin >> score;
-    cin.ignore(1);
-    cout << "Write comment: ";
-    getline(cin,comment);
-    review->setScore(score);
-    review->setComment(comment);
-    member.pushReview(review);
-}
+
 

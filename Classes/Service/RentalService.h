@@ -11,6 +11,8 @@
 #ifndef RENTALSERVICE_H
 #define MRENTALSERVICE_H
 #include "../User/Member/Member.cpp"
+#include "../User/Admin/Admin.cpp"
+#include "../../Database/Database.cpp"
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -19,20 +21,40 @@ class RentalService
 {
 private:
     /* data */
-    vector<Motorbike*> motorbikes;
+    vector<Member> members;
+    vector<Motorbike> motorbikes;
+    vector<Review> renterReviews;
+    vector<Review> bikeReviews;
+    vector<Request> requests;
 public:
-    RentalService(vector<Motorbike*> motorbikes) : motorbikes(motorbikes){};
+    RentalService(){};
+    // getters
+    vector<Member> getMembers();
+    vector<Motorbike> getMotorbikes();
+    vector<Review> getRenterReviews();
+    vector<Review> getBikeReviews();
+    vector<Request> getRequests();
 
+    void rentBike(string id);
+    void viewRentedBike(string renterID);
+    void writeReviewForRenter(string renterID);
+    void writeReviewForBike(string ownerID);
+    void getAverageRatingForRenter(string renterID);
+    void getAverageRatingForBike(string ownerID);
+    void viewBikeReviews(string id);
+    void createRequest(string renterID, string ownerID);
+    void acceptRequest(string ownerID);
+    void declineRequest(string ownerID);
+    void checkRequest(string renterID);
+
+    void getDataFromDatabase();
+    void saveDataToDatabase();
     // register guest to member
     void registerMember();
 
     // shows list of motorbikes which filters by city, points, and member's rating
     void showMotorbikeList(string city, int myPoints, double myRating);
 
-    // adds bike to system
-    void addMotorbike(Motorbike &motorbike);
-
-    Motorbike &getMotorbike(int index);
 
     // main menu
     void menuMain();
@@ -49,6 +71,12 @@ public:
 
     // menu for admin
     void menuAdmin();
+
+    //menu for renting bike
+    void menuRentBike(Member& member,string bikeOwnerID);
+
+    
+
 };
 
 

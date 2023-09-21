@@ -35,8 +35,8 @@ class Request {
           this->renterID = renterID;
           this->ownerID = ownerID;
           this->credit = credit;
-          this->status = false;
-          this->decline = false;
+          this->status = status;
+          this->decline = decline;
         };
 
         //Getter

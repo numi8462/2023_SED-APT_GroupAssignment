@@ -39,3 +39,11 @@ void Request::setDecline(bool decline){
   this->decline = decline;
 }
 
+void Request::setRenterID(string renterID) {
+  this->renterID = renterID;
+}
+
+void Request::setOwnerID(string ownerID) {
+  this->ownerID = ownerID;
+}
+
