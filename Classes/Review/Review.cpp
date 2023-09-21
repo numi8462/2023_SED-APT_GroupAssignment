@@ -25,7 +25,8 @@ string Review::getReviewType() { return reviewType; };
 string Review::getID() { return id; };
 
 void Review::showReview(){
-    cout << "Score: " << score << ", Comment: " << comment << endl;
+
+  cout << "Score: " << score << ", Comment: " << comment << endl;
 }
 
 void Review::setScore(double score) { this->score = score; };

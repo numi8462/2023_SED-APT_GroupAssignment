@@ -47,7 +47,7 @@ void Member::showInfo(){
 // getters
 string Member::getMemberID(){return memberID;}
 string Member::getFullName(){return fullName;}
-string Member::getUsername(){return username;}
+string Member::getUsername(){return username;}  
 string Member::getPassword(){return password;}
 int Member::getPhoneNumber(){return phoneNumber;}
 string Member::getIdType(){return idType;}
@@ -100,16 +100,6 @@ void Member::writeReview(){
     review->setComment(comment);
     rentedBike->pushReview(review);
 }
-//Take in the Motorbike object and the rental time as parameters.
-// void Member::sendRequest(Motorbike &motorbike, Date start, Date end) {
-//         Request *request = new Request();
-//         request->renter = this;
-//         request->rentalBike = &motorbike;
-//         request->start = start;
-//         request->end = end;
-//         int rentingDays = end - start; // Calculate renting days
-//         request->credit = rentingDays * motorbike.getPointsPerDay(); // Use to calculate credit
-// }
 // deduct credit if rented successfully
 void Member::creditDeduction(int credit){
     this->points = this->points - credit;

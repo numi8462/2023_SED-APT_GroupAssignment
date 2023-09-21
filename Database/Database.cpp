@@ -18,9 +18,12 @@
 #include <sstream>
 using namespace std;
 
-vector<Member> Database::getMembers(){
-    return members;
-}
+// getters for vectors
+vector<Member> Database::getMembersVector(){return members;}
+vector<Motorbike> Database::getMotorbikesVector(){return motorbikes;}
+vector<Review> Database::getRenterReviewsVector(){return renterReviews;}
+vector<Review> Database::getBikeReviewsVector(){return bikeReviews;}
+vector<Request> Database::getRequestsVector(){return requests;}
 
 
 // void Database::displayData(){
@@ -46,6 +49,21 @@ void Database::writeMotorbikeData(Motorbike &motorbike){
     outFile << motorbike.getOwnerID() << "," << motorbike.getModel() << "," << motorbike.getColor() << "," << motorbike.getEngineSize() << "," << motorbike.getMode() << "," << motorbike.getYearMade() << "," << motorbike.getDescription() << "," << motorbike.getRent() << "," << motorbike.getRatingAverage() << "," << motorbike.getCity() << "," << motorbike.getPointsPerDay() << "," << motorbike.getMinimumRenterScore() << "\n";
     outFile.close();
     cout << "File saved" << endl; 
+}
+
+//writes review data
+void Database::writeReviewData(Review &review) {
+    ofstream outFile("Database/Reviews.dat",ios::app);
+    outFile << review.getReviewType() << "," << review.getID() << "," << review.getScore() << "," << review.getComment() << "\n";
+    outFile.close();
+    cout << "File saved" << endl;
+}
+// writes request data
+void Database::writeRequestData(Request &request) {
+    ofstream outFile("Database/Requests.dat",ios::app);
+    outFile << request.getRenterID() << "," << request.getOwnerID() << "," << request.getCredit() << "," << request.getStatus() << "," << request.getDecline() << "\n";
+    outFile.close();
+    cout << "File saved" << endl;
 }
 
 //reads the current member data
@@ -159,6 +177,42 @@ Motorbike Database::readBikeData(string id){
     }  
     inFile.close();
     return currBike;
+}
+
+//reads review data
+Review Database::readRenterReviewData(string memberID){
+    ifstream inFile;
+    inFile.open("Database/Reviews.dat");
+
+    Review currRev;
+    string line;
+
+    string reviewType;
+    string id;
+    double score;
+    string comment;
+
+    while(inFile.peek()!=EOF){
+
+        string field;
+        getline(inFile,field,',');
+        reviewType = field;
+        getline(inFile,field,',');
+        id = field;
+        getline(inFile,field,',');
+        score = stod(field);
+        getline(inFile,field,'\n');
+        comment = field;
+
+        if(id == memberID){
+            Review review(reviewType,id,score,comment);
+            currRev = review;
+            break;
+        }
+    }  
+    inFile.close();
+    return currRev;
+
 }
 
 // replaces data if string id matches the Member class
@@ -315,4 +369,82 @@ void Database::getAllMotorbikes(){
         b.showDetailedInfo();
         cout << "\n";
     }
+}
+
+//return all reviews for renter and bike
+void Database::getAllReviews(){
+    ifstream inFile;
+    inFile.open("Database/Reviews.dat");
+
+    Review currRev;
+    string line;
+
+    string reviewType;
+    string id;
+    double score;
+    string comment;
+
+    while(inFile.peek()!=EOF){
+
+        string field;
+        getline(inFile,field,',');
+        reviewType = field;
+        getline(inFile,field,',');
+        id = field;
+        getline(inFile,field,',');
+        score = stod(field);
+        getline(inFile,field,'\n');
+        comment = field;
+
+
+        Review review(reviewType,id,score,comment);
+        currRev = review;
+
+        if(reviewType == "renter"){
+            renterReviews.push_back(currRev);
+        } else {
+            bikeReviews.push_back(currRev);
+        }
+
+    }  
+    inFile.close();
+
+}
+
+// return all requests
+void Database::getAllRequests(){
+    ifstream inFile;
+    inFile.open("Database/Requests.dat");
+
+    Request currReq;
+    string line;
+
+    string renterID;
+    string ownerID;
+    int credit;
+    bool status;
+    bool decline;
+
+    while(inFile.peek()!=EOF){
+
+        string field;
+        getline(inFile,field,',');
+        renterID = field;
+        getline(inFile,field,',');
+        ownerID = field;
+        getline(inFile,field,',');
+        credit = stod(field);
+        getline(inFile,field,'\n');
+        status = (field == "1");
+        getline(inFile,field,',');
+        decline = (field == "1");
+
+
+        Request request(renterID,ownerID,credit,status,decline);
+        currReq = request;
+
+        requests.push_back(currReq);
+
+    }  
+    inFile.close();
 }
