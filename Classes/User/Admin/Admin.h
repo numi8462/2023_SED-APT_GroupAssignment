@@ -23,6 +23,7 @@ class Admin {
         string username;
         string password;
     public:
+        Admin(){};
         Admin(string username, string password) : username(username), password(password){}
         string getUsername();
         string getPassword();

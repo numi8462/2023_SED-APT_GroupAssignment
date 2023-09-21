@@ -8,9 +8,7 @@
   Created  date: 14/09/2023
   Acknowledgement: 
 */
-#ifndef ADMIN_H
-#define ADMIN_H
-#include "../../Service/RentalService.h"
+#include "Admin.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -18,25 +16,20 @@
 
 using namespace std;
 
-class Admin {
-    private:
-        string username;
-        string password;
-    public:
-        Admin(string username, string password) : username(username), password(password){}
-        string getUsername() {
-            return username;
-        }
-        string getPassword() {
-            return password;
-        }
-        void setUsername(string username) {
-            this->username = username;
-        }
-        void setPassword(string password) {
-            this->password = password;
-        }
-        
-};
 
-#endif
+
+string Admin::getUsername() {
+    return username;
+}
+string Admin::getPassword() {
+    return password;
+}
+void Admin::setUsername(string username) {
+    this->username = username;
+}
+void Admin::setPassword(string password) {
+    this->password = password;
+}
+        
+
+

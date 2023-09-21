@@ -21,6 +21,8 @@ using namespace std;
 //getters
 double Review::getScore() { return score; };
 string Review::getComment() { return comment; };
+string Review::getReviewType() { return reviewType; };
+string Review::getID() { return id; };
 
 void Review::showReview(){
     cout << "Score: " << score << ", Comment: " << comment << endl;
@@ -28,4 +30,6 @@ void Review::showReview(){
 
 void Review::setScore(double score) { this->score = score; };
 void Review::setComment(string comment) { this->comment = comment; };
+void Review::setReviewType(string reviewType){this->reviewType = reviewType;}
+void Review::setID(string id){this->id = id;}
 

@@ -62,9 +62,11 @@ class Motorbike;
         //   status = false;
         // }
     //Getter method to get the status
-        bool Request::getStatus() { 
-            return status; 
-        };
+        bool Request::getStatus() { return status; }
+        bool Request::getDecline() { return decline;}
+        string Request::getRenterID() { return renterID;}
+        string Request::getOwnerID() { return ownerID;}
+        
         // sets the required amount of credit for rent
         void Request::setCredit(int credit) {
           this->credit = credit;
@@ -73,5 +75,9 @@ class Motorbike;
         // sets request status
         void Request::setStatus(bool status) {
           this->status = status;
+        }
+
+        void Request::setDecline(bool decline){
+          this->decline = decline;
         }
 
