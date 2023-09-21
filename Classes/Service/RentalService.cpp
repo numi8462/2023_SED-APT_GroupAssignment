@@ -178,45 +178,35 @@ void RentalService::viewBikeReviews(string id){
 
 };
 void RentalService::createRequest(string renterID, string ownerID){
-    bool hasRequest = false;
-    while(hasRequest == false){
-        for(auto rq : requests){
-            if(rq.getRenterID() == renterID){
-                cout << "You already have a pending request" << endl;
-                hasRequest = true;
-            }
+    Request* request = new Request;
+    int points = 0;
+    int days = 0;
+    int total = 0;
+    cout << "Type the amount of days to rent:";
+    cin >> days;
+    for(auto bike : motorbikes){
+        if(bike.getOwnerID() == ownerID){
+            points = bike.getPointsPerDay();
         }
-        Request* request = new Request;
-        int points = 0;
-        int days = 0;
-        int total = 0;
-        cout << "Type the amount of days to rent:";
-        cin >> days;
-        for(auto bike : motorbikes){
-            if(bike.getOwnerID() == ownerID){
-                points = bike.getPointsPerDay();
-            }
-        }
-        total = days * points;
-        for(auto m : members){
-            if(m.getMemberID() == renterID){
-                int myPoints = m.getPoints();
-                if(myPoints < total){
-                    cout << "Not enough credit. Please charge credits" << endl;
-                    hasRequest = true;
-                } else {
-                    cout <<"Request sent to Owner" << endl;
-                    request->setRenterID(renterID);
-                    request->setOwnerID(ownerID);
-                    request->setCredit(total);
-                    request->setStatus(false);
-                    request->setDecline(false);
-                    requests.push_back(*request);
-                    hasRequest = true;
-                }
+    }
+    total = days * points;
+    for(auto m : members){
+        if(m.getMemberID() == renterID){
+            int myPoints = m.getPoints();
+            if(myPoints < total){
+                cout << "Not enough credit. Please charge credits" << endl;
+            } else {
+                cout <<"Request sent to Owner" << endl;
+                request->setRenterID(renterID);
+                request->setOwnerID(ownerID);
+                request->setCredit(total);
+                request->setStatus(false);
+                request->setDecline(false);
+                requests.push_back(*request);
             }
         }
     }
+    
 
 };
 void RentalService::acceptRequest(string ownerID){
@@ -373,7 +363,16 @@ void RentalService::menuMember(Member &member){
             viewRentedBike(member.getMemberID());
             break;
         case 3:
-            menuSearchBike(member);
+            bool hasRequest = false;
+            for(auto rq : requests){
+                if(rq.getRenterID() == member.getMemberID()){
+                    cout << "You already have a pending request" << endl;
+                    hasRequest = true;
+                }
+            }
+            if(hasRequest == false){
+                menuSearchBike(member);
+            }
             choice = 0;
             break;
         case 4:
@@ -403,7 +402,8 @@ void RentalService::menuRentBike(Member& member,string bikeOwnerID){
     bool found = false;
     for(auto b : motorbikes){
         if(b.getOwnerID() == bikeOwnerID){
-
+            createRequest(member.getMemberID(),bikeOwnerID);
+            found = true;
         }
     }
     if(found == false){
