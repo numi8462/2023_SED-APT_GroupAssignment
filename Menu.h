@@ -34,13 +34,17 @@ public:
 
     // menu for searching bike
     void menuSearchBike(Member& member);
+    
 
     // menu for member
     void menuMember(Member &member);
+     void loginMemMenu();
+
 
 
     // menu for admin
     void menuAdmin();
+    void adminLoginMenu();
 };
 
 

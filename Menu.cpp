@@ -52,7 +52,36 @@ System::guestMenu() {
     }
 
 }
+//login admin menu
+void System::adminLoginMenu() {
+    string username, password;
 
+    cout << "---------------------------------------\n"<< endl;
+    cout << "|              ADMIN MENU             |\n"<< endl;
+    cout << "|     1.Login As Admin                |\n"<<endl;
+    cout<< "|     2.Back to main menu             |\n"<< endl;
+    cout << "---------------------------------------\n"<< endl;
+    switch (menuChoice(1, 2)) {
+        case 1:
+            cin.ignore();
+            cout << "Enter your username: " << endl;
+            getline(cin, username);
+            cout << "Enter your password: "<< endl;
+            getline(cin, password);
+            if (admin->username == username && admin->password == password) {
+                cout << "Log in successfully!!! \n\n\n\n"<< endl;
+                adminMenu();
+                break;
+            } else {
+                cout << RED <<"\n\nWrong username or password!!! \n"<< endl;
+            }
+        case 2:
+            mainMenu();
+            break;
+              }
+
+
+}
 
 
 //admin menu
@@ -79,6 +108,21 @@ System::adminMenu() {
 
 
 }
+//login member menu
+bool System::loginMember(string username, string password) {
+    int count = 0;
+    for (Member *mem: memberVector) {
+        if (mem->username == username && mem->password == password) {
+            currentUser = mem;
+            }
+            cout <<"Log in successfully!!! \n\n" <<endl;
+            return true;
+        }
+    }
+    cout<< "\n\nWrong username or password!!! \n" <<endl;
+    return false;
+
+
 //member menu
 RentalService::menuMember(Member &member){
     cout << "\nThis is your Member Menu\n" << endl;
