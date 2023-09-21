@@ -33,17 +33,17 @@ public:
     }
 
     // menu for searching bike
-    void menuSearchBike(Member& member);
+    void menuSearchBike(Member &member);
     
 
     // menu for member
     void menuMember(Member &member);
-     void loginMemMenu();
+     void memberLoginMenu();
 
 
 
     // menu for admin
-    void menuAdmin();
+    void menuAdmin(Member &member);
     void adminLoginMenu();
 };
 
