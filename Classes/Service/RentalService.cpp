@@ -21,6 +21,15 @@ vector<Review> RentalService::getRenterReviews(){return renterReviews;};
 vector<Review> RentalService::getBikeReviews(){return bikeReviews;};
 vector<Request> RentalService::getRequests(){return requests;};
 
+// view all bike
+void RentalService::viewAllBike(){
+    int count = 1;
+    for(auto bike : motorbikes){
+        cout << count << ". ";
+        bike.showInfo();
+        count++;
+    }
+}
 // collects data from database
 void RentalService::getDataFromDatabase(){
     Database database;
@@ -54,7 +63,44 @@ void RentalService::saveDataToDatabase(){
         database.writeReviewData(rvb);
     }
 };
+// return bike to owner
+void RentalService::returnBike(string renterID, string ownerID){
+    bool hasRent = false;
+    for(auto m : members){
+        if(m.getMemberID() == renterID){
+            if(m.getRentStatus() == true){
+                hasRent = true;
+                break;
+            }
+        }
+    }
+    if(hasRent == true){
+        cout << "Do you want to return the bike?" << endl;
+        cout << "1. Yes" << endl;
+        cout << "2. No" << endl;
+        cout << "Please enter 1 or 2: ";
+        int choice;
+        int index = 0;
+        cin >> choice;
+        cin.ignore();
+        if(choice == 1){
+            for(auto &m : members){
+                if(m.getMemberID() == renterID){
+                    m.setRentStatus(false);
+                }
+            }
+            for(auto &rq : requests){
+                if(rq.getOwnerID() == ownerID && rq.getRenterID() == renterID){
+                    requests.erase(requests.begin() + index);
+                    cout << "Returned Bike\n";
+                }
+                index++;
+            }
+        }
+    }
 
+    saveDataToDatabase();
+}
 // register guest to member
 void RentalService::registerMember(){
 
@@ -68,6 +114,7 @@ void RentalService::rentBike(string id){
         }
     }
 }
+// view rented bike, can return bike as well
 void RentalService::viewRentedBike(string renterID){
     string ownerID = "";
     bool bike = false;
@@ -86,12 +133,13 @@ void RentalService::viewRentedBike(string renterID){
 
     for(auto &m : motorbikes){
         if(m.getOwnerID() == ownerID){
-            m.showDetailedInfo();
+            m.showRentInfo();
         }
     }
     if(bike == false){
         cout << "You have not rented any motorbike!" << endl;
     }
+    returnBike(renterID, ownerID);
 }
 void RentalService::viewMyBike(string ownerID){
     for(auto b : motorbikes){
@@ -209,7 +257,7 @@ void RentalService::createRequest(string renterID, string ownerID){
     bool hasRequest = false;
     for(auto rq : requests){
         if(rq.getRenterID() == renterID){
-            cout << "\n\033[31m You already have a pending request \033[0m" << endl;
+            cout << "\n\033[31m You already have an Existing request \033[0m" << endl;
             hasRequest = true;
             break;
         }
@@ -347,10 +395,10 @@ void RentalService::menuMain(){
             menuGuest();
             break;
         case 2:
-            menuMember();
+            menuMemberLogin();
             break;
         case 3:
-            menuAdmin();
+            // menuAdminLogin();
             break;
         default:
             cout << "Invalid choice" << endl;
@@ -362,22 +410,23 @@ void RentalService::menuMain(){
 
 // menu for guests
 void RentalService::menuGuest(){
-    cout << "---------------------------------------\n" << endl;
-    cout <<"|              GUEST MENU             |\n" << endl;
-    cout << "|     1.View bike                   |\n" << endl;
-    cout << "|     2.Register                      |\n" << endl;
-    cout << "|     3.Back to main menu             |\n" << endl;
-    cout <<"---------------------------------------\n" << endl;
+
     int choice;
     do
     {
-        /* code */
+        cout << "---------------------------------------\n" << endl;
+        cout << "|              GUEST MENU             |\n" << endl;
+        cout << "|     1.View bike                     |\n" << endl;
+        cout << "|     2.Register                      |\n" << endl;
+        cout << "|     3.Back to main menu             |\n" << endl;
+        cout <<"---------------------------------------\n" << endl;
+        cout << "Enter your choice: ";
         cin >> choice;
         cin.ignore(1);
         switch (choice)
         {
         case 1:
-            
+            viewAllBike();
             break;
         case 2:
             
@@ -389,7 +438,7 @@ void RentalService::menuGuest(){
             cout << "Invalid choice" << endl;
             break;
         }
-    } while (choice < 1 || choice > 3);
+    } while (choice != 3);
     
 }
 
@@ -440,7 +489,8 @@ void RentalService::menuMember(Member &member){
 
     int choice;
     do {
-        cout << "\nThis is your Member Menu\n" << endl;
+        cout << "---------------------------------------"<< endl;
+        cout << "This is your Member Menu\n" << endl;
         cout << "0. Exit" << endl;
         cout << "1. View my Information" << endl;
         cout << "2. View rented bike" << endl;
@@ -449,6 +499,9 @@ void RentalService::menuMember(Member &member){
         cout << "5. Check my request" << endl;
         cout << "6. View requests I received" << endl;
         cout << "7. Add credit" << endl;
+        cout << "8. Write Review" << endl;
+        cout << "9. Unlist Bikes" << endl;
+        cout << "---------------------------------------\n"<< endl;
         cout << "\nEnter your choice: ";
         cin >> choice;
         cin.ignore();
@@ -459,6 +512,7 @@ void RentalService::menuMember(Member &member){
         case 1:
             cout << "<          Your Information          >" << endl;
             member.showInfo();
+            getAverageRatingForRenter(member.getMemberID());
             break;
         case 2:
             viewRentedBike(member.getMemberID());
@@ -478,6 +532,10 @@ void RentalService::menuMember(Member &member){
             break;
         case 7:
             break;
+        case 8:
+            break;
+        case 9:
+            break;
         default:
             cout << "Invalid Choice" << endl;
             break;
@@ -486,15 +544,65 @@ void RentalService::menuMember(Member &member){
     
 }
 
+void RentalService::menuMemberLogin() {
+    int choice;
+    do
+    {
+        cout << "---------------------------------------\n"<< endl;
+        cout << "|              MEMBER MENU             |\n"<< endl;
+        cout << "|     1.Login As Member                |\n"<<endl;
+        cout << "|     2.Back to main menu              |\n"<< endl;
+        cout << "---------------------------------------\n"<< endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore();
+        switch (choice) {
+            case 1:
+                loginMember();
+                break;
+            case 2:
+                menuMain();
+                break;
+    }
+    } while (choice != 2);
+    
+
+
+
+}
 
 // menu for admin
-void RentalService::menuAdmin(){
+void RentalService::menuAdminLogin(){
     string username, password;
     cout << "---------------------------------------\n"<< endl;
     cout << "|              ADMIN MENU             |\n"<< endl;
     cout << "|     1.Login As Admin                |\n"<<endl;
     cout<< "|     2.Back to main menu             |\n"<< endl;
     cout << "---------------------------------------\n"<< endl;
+    int choice;
+    cin >> choice;
+
+    do {
+        switch (choice) {
+            case 1:
+                // cin.ignore();
+                // cout << "Enter your username: " << endl;
+                // getline(cin, username);
+                // cout << "Enter your password: "<< endl;
+                // getline(cin, password);
+                // if (admin->username == username && admin->password == password) {
+                //     cout << "Log in successfully!!! \n\n\n\n"<< endl;
+                //     adminMenu();
+                //     break;
+                // } else {
+                //     cout <<"\n\nWrong username or password!!! \n"<< endl;
+                // }
+            case 2:
+                menuMain();
+                break;
+        }
+    } while (choice < 1 || choice > 2);
+    
 }
 
 // menu for renting bike
@@ -575,3 +683,28 @@ void RentalService::menuRequest(Member& member){
 
 };
 
+void RentalService::menuWriteReview(Member& member){
+
+}
+
+void RentalService::loginMember(){
+    bool login = false;
+    string username, password;
+    Member curr;
+    cout << "Enter your username: ";
+    getline(cin, username);
+    cout << "Enter your password: ";
+    getline(cin, password);
+    for(auto m : members){
+        if (m.getUsername() == username && m.getPassword() == password) {
+            cout << "Log in successfully!!! \n"<< endl;
+            curr = m;
+            menuMember(curr);
+            break;
+        } 
+    }
+
+    if(login == false) {
+        cout <<"\n\nWrong username or password!!! \n"<< endl;
+    } 
+}

@@ -35,6 +35,7 @@ public:
     vector<Review> getBikeReviews();
     vector<Request> getRequests();
 
+    void viewAllBike();
     void rentBike(string id);
     void viewRentedBike(string renterID);
     void viewMyBike(string ownerID);
@@ -47,6 +48,12 @@ public:
     void acceptRequest(string renterID, string ownderID);
     void declineRequest(string renterID, string ownderID);
     void checkRequest(string renterID);
+
+    void loginMember();
+    void loginAdmin();
+    void unlistBike(string ownerID);
+    void returnBike(string renterID, string ownerID);
+    void addCredit(string ownerID);
 
     void getDataFromDatabase();
     void saveDataToDatabase();
@@ -68,16 +75,18 @@ public:
 
     // menu for member
     void menuMember(Member &member);
-
+    void menuMemberLogin();
 
     // menu for admin
-    void menuAdmin();
+    void menuAdminLogin();
 
     //menu for renting bike
     void menuRentBike(Member& member,string bikeOwnerID);
 
     // menu for requests
     void menuRequest(Member& member);
+
+    void menuWriteReview(Member& member);
 
 };
 

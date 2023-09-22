@@ -53,16 +53,8 @@ int main(int argc, char const *argv[])
 
     Database database;
     RentalService service;
-    Member currMember;
     service.getDataFromDatabase();
-    for(auto m  : service.getMembers()){
-      if(m.getMemberID() == "MEM1"){
-        currMember = m;
-      }
-    }
-    
-    
-    service.menuMember(currMember);
+    service.menuMain();
 
     return 0;
 }

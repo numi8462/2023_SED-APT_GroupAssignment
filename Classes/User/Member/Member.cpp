@@ -29,7 +29,6 @@ void Member::showInfo(){
     cout << "Licence Number: " << licenceNumber << endl;
     cout << "Expiry Date: " << expiryDate << endl;
     cout << "Points: " << points << endl;
-    cout << "Rent Score Average: " << rentScoreAverage << endl;
     cout << "Rent Status: " << rentStatus << endl;
 }
 
