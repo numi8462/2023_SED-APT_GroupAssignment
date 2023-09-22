@@ -56,14 +56,13 @@ public:
 
     void loginMember(); // confirms login
     void loginAdmin();  // confirms admin
-    void unlistBike(string ownerID);
-    void returnBike(string renterID, string ownerID);
+    void unlistBike(string ownerID); // removes all data related to motorbike
+    void returnBike(string renterID, string ownerID); // returns bike to owner
     void addCredit(string ownerID);
 
     void getDataFromDatabase(); // reads data from database
     void saveDataToDatabase(); // saves data to database
-    // register guest to member
-    void registerMember();
+    void registerMember();    // register guest to member
 
     // shows list of motorbikes which filters by city, points, and member's rating
     void showMotorbikeList(string city, int myPoints, double myRating);

@@ -509,6 +509,41 @@ void RentalService::showMotorbikeList(string city, int myPoints, double myRating
     
 }
 
+void RentalService::unlistBike(string ownerID){
+    string confirm;
+    cout << "\nAre you sure you want to unlist your bike?" << endl;
+    cout << "Type in (yes) or (no): ";
+    getline(cin, confirm);
+
+    if(confirm == "yes"){
+        int rqIndex = 0;
+        int rvIndex = 0;
+        int bikeIndex = 0;
+        for(auto &rq : requests){
+            if(rq.getOwnerID() == ownerID){
+                requests.erase(requests.begin() + rqIndex);
+            }
+            rqIndex++;
+        }
+        for(auto &rv : bikeReviews) {
+            if(rv.getID() == ownerID){
+                bikeReviews.erase(bikeReviews.begin() + rvIndex);
+            }
+            rvIndex++;
+        }
+        for(auto &b : motorbikes){
+            if(b.getOwnerID() == ownerID){
+                motorbikes.erase(motorbikes.begin() + bikeIndex);
+                break;
+            }
+            bikeIndex++;
+        }
+        cout << "\nMotorbike removed from system\n" << endl;
+    } else {
+        cout << "\nCanceled" << endl;
+    }
+    saveDataToDatabase();
+}
 
 // main menu
 void RentalService::menuMain(){
@@ -700,6 +735,7 @@ void RentalService::menuMember(Member &member){
         case 8:
             break;
         case 9:
+            unlistBike(member.getMemberID());
             break;
         default:
             cout << "Invalid Choice" << endl;
