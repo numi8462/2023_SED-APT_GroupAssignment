@@ -335,11 +335,62 @@ void RentalService::menuMain(){
     cout << "s3979772, Tri Ngo\n" << endl;
     cout << "Use the app as 1.Guest   2.Member    3.Admin\n" << endl;
     cout << "Enter your choice: ";
+    int choice;
+    do
+    {
+        /* code */
+        cin >> choice;
+        cin.ignore(1);
+        switch (choice)
+        {
+        case 1:
+            menuGuest();
+            break;
+        case 2:
+            menuMember();
+            break;
+        case 3:
+            menuAdmin();
+            break;
+        default:
+            cout << "Invalid choice" << endl;
+            break;
+        }
+    } while (choice < 1 || choice > 3);
+    
 }
 
 // menu for guests
 void RentalService::menuGuest(){
-    cout << "" << endl;
+    cout << "---------------------------------------\n" << endl;
+    cout <<"|              GUEST MENU             |\n" << endl;
+    cout << "|     1.View bike                   |\n" << endl;
+    cout << "|     2.Register                      |\n" << endl;
+    cout << "|     3.Back to main menu             |\n" << endl;
+    cout <<"---------------------------------------\n" << endl;
+    int choice;
+    do
+    {
+        /* code */
+        cin >> choice;
+        cin.ignore(1);
+        switch (choice)
+        {
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            menuMain();
+            break;
+        default:
+            cout << "Invalid choice" << endl;
+            break;
+        }
+    } while (choice < 1 || choice > 3);
+    
 }
 
 // menu for searching bike
@@ -438,7 +489,12 @@ void RentalService::menuMember(Member &member){
 
 // menu for admin
 void RentalService::menuAdmin(){
-
+    string username, password;
+    cout << "---------------------------------------\n"<< endl;
+    cout << "|              ADMIN MENU             |\n"<< endl;
+    cout << "|     1.Login As Admin                |\n"<<endl;
+    cout<< "|     2.Back to main menu             |\n"<< endl;
+    cout << "---------------------------------------\n"<< endl;
 }
 
 // menu for renting bike
