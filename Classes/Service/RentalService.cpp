@@ -226,7 +226,7 @@ void RentalService::viewMyBike(string ownerID){
             break;
         }
     }
-    if(isFounded = false){
+    if(isFounded == false){
         cout << "\nNo Registered Bike" << endl;
         cout << "Would you like to register one?" << endl;
         cout << "1. Yes" << endl;
@@ -688,7 +688,6 @@ void RentalService::menuMember(Member &member){
             break;
         case 4:
             viewMyBike(member.getMemberID());
-            choice = 0;
             break;
         case 5:
             checkRequest(member.getMemberID());
@@ -725,6 +724,7 @@ void RentalService::menuMemberLogin() {
         switch (choice) {
             case 1:
                 loginMember();
+                choice = 2;
                 break;
             case 2:
                 menuMain();
@@ -863,6 +863,7 @@ void RentalService::loginMember(){
 
     if(login == false) {
         cout <<"\nWrong username or password!!! \n"<< endl;
+        menuMain();
     } 
 }
 
