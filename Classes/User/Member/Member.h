@@ -32,14 +32,10 @@ class Member {
         string expiryDate;
         int points;
         double rentScoreAverage;
-        Motorbike* rentedBike;
-        Request* myRequest;
-        vector<Review*> rentReviews;
-        vector<Request*> listOfRequests;
-        Motorbike *myBike;
+        bool rentStatus;
     public:
         Member(){};
-        Member( string memberID,string fullName, string username, string password, int phoneNumber, string idType,int idNumber,int licenceNumber, string expiryDate, int points, double rentScoreAverage){
+        Member( string memberID,string fullName, string username, string password, int phoneNumber, string idType,int idNumber,int licenceNumber, string expiryDate, int points, double rentScoreAverage, bool rentStatus){
             this->memberID = memberID;
             this->fullName = fullName;
             this->username = username;
@@ -51,11 +47,7 @@ class Member {
             this->expiryDate = expiryDate;
             this->points = points;
             this->rentScoreAverage = rentScoreAverage;
-            this->rentedBike = nullptr;
-            this->myRequest = nullptr;
-            this->rentReviews = {};
-            this->listOfRequests = {};
-            this->myBike = nullptr;
+            this->rentStatus = rentStatus;
         };
         virtual ~Member() {}
         // shows member information
@@ -73,46 +65,21 @@ class Member {
         string getExpiryDate();
         int getPoints();
         double getRentScoreAverage();
-        Motorbike* getRentedBike();
-        Request* getRequest();
-        vector<Review*> getRentReviews();
-        vector<Request*> getListOfRequests();
-        Motorbike *getMyBike();
-        
-        
-        
+        bool getRentStatus();
 
-
-        
-
-
-        void pushReview(Review* review);
-
-        // sets my request if Member sends rent request
-        void setMyRequest(Request &request);
-
-        // rents bike if request status is true
-        void rentBike(Motorbike &rentedBike);
-
-        // writes review for bike
-        void writeReview();
-        //Take in the Motorbike object and the rental time as parameters.
-        // void sendRequest(Motorbike &motorbike, Date start, Date end);
-        // deduct credit if rented successfully
-        void creditDeduction(int credit);
-        // charge credit
-        void chargeCredit();
-        // add credit if motorbike is rented
-        void addCredit();
-
-        // show my reviews from Owners
-        void showMemberReviews();
-
-        // calculate average rating score
-        double getAverageScore();
-
-        void writeReview(Member &member);
-        void setMotorbike(Motorbike &motorbike);
+        //setters
+        void setMemberID(string memberID);
+        void setFullName(string fullName);
+        void setUsername(string username);
+        void setPassword(string password);
+        void setPhoneNumber(int phoneNumber);
+        void setIdType(string idType);
+        void setIdNumber(int idNumber);
+        void setLicenceNumber(int licenceNumber);
+        void setExpiryDate(string expiryDate);
+        void setPoints(int points);
+        void setRentScoreAverage(double rentScoreAverage);
+        void setRentStatus(bool rentStatus);
 
         friend class Database;
 };

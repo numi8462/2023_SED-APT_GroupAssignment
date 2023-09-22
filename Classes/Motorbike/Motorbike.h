@@ -34,8 +34,6 @@ private:
     int pointsPerDay;
     double minimumRenterScore;
 
-    vector<Review*> reviews;
-
 public:
     Motorbike(){};
     Motorbike(string ownerID, string model, string color, string engineSize, string mode, string yearMade, string description, bool rent, double ratingAverage, string city, int pointsPerDay, double minimumRenterScore){
@@ -48,7 +46,6 @@ public:
         this->description = description;
         this->rent = rent;
         this->ratingAverage = ratingAverage;
-        this->reviews = {};
         this->city = city;
         this->pointsPerDay = pointsPerDay;
         this->minimumRenterScore = minimumRenterScore;
@@ -69,10 +66,6 @@ public:
     double getMinimumRenterScore() ;
 
     //setters
-    void setCity(string city);
-    void setPointsPerDay(int pointsPerDay);
-    void setRatingAverage(double ratingAverage);
-    void setBikeID(string bikeID);
     void setOwnerID(string ownerID);
     void setModel(string model);
     void setColor(string color);
@@ -80,15 +73,14 @@ public:
     void setMode(string mode);
     void setYearMade(string yearMade);
     void setDescription(string description);
-
-
-    // sets the minimum renter score
-    void setMinimumRenter(double score);
-   
-    // sets the renting period for my bike
-    void setRentingPeriod();
     void setRentStatus(bool rent);
-    void pushReview(Review* review);
+    void setRatingAverage(double ratingAverage);
+    void setCity(string city);
+    void setPointsPerDay(int pointsPerDay);
+    void setMinimumRenter(double score);
+    
+    void setRentingPeriod();
+    
 
     // shows motorbike info
     void showDetailedInfo();
@@ -99,26 +91,6 @@ public:
     void showRentInfo();
 
     void showRentReviews();
-    // calculate average bike score
-    double getAverageRating();
-
-    // function to write review and push to review list
-    // void setReview(){
-    //   Review* review = new Review;
-
-    //   int score;
-    //   string comment;
-
-    //   cout << "Please write the review for rented bike:" << endl;
-    //   cout << "Score (1-10): ";
-    //   cin >> score;
-    //   cin.ignore(1);
-    //   cout << "Write comment: " << endl;
-    //   getline(cin,comment);
-    //   review->setScore(score);
-    //   review->setComment(comment);
-    //   reviews.push_back(review);
-    // }
 };
 
 

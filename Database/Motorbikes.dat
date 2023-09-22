@@ -1,2 +1,5 @@
-MEM1,yamada,red,enginesize,mode,yearmade,description,0,10,Hanoi,5,8
-MEM2,Honda,blue,enginesize,mode,yearmade,description,0,9,Hanoi,6,5
+MEM1,honda,white,size,mode,09 09 2015,honda bike,0,9,Hanoi,5,5
+MEM2,yamada,blue,size,mode,09 09 2015,yamada bike,0,10,Saigon,5,5
+MEM3,yamada,yellow,size,mode,09 09 2015,yamada bike,0,10,Hanoi,5,5
+MEM4,honda,dark,size,mode,09 09 2015,honda bike,0,10,Saigon,5,5
+MEM5,honda,red,size,mode,09 09 2015,honda bike,0,10,Saigon,5,5

@@ -10,7 +10,6 @@
 */
 #ifndef DATABASE_H
 #define DATABASE_H
-#include "../Classes/User/Admin/Admin.cpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -42,6 +41,7 @@ public:
     vector<Review> getBikeReviewsVector();
     vector<Request> getRequestsVector();
 
+    void deleteDatabase();
     void displayData();
 
     Member readMemberData(string memberID);

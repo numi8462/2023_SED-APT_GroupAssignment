@@ -35,12 +35,24 @@ vector<Request> Database::getRequestsVector(){return requests;}
 //     }
 // };
 
+void Database::deleteDatabase(){
+    ofstream ofs;
+    ofs.open("Database/Members.dat", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    ofs.open("Database/Motorbikes.dat", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    ofs.open("Database/Requests.dat", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    ofs.open("Database/Reviews.dat", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+}
+
 //writes member data to Members.dat file
 void Database::writeMemberData(Member &member){
     ofstream outFile("Database/Members.dat",ios::app);
-    outFile << member.getMemberID() << "," << member.getFullName() << "," << member.getUsername() << "," << member.getPassword() << "," << member.getPhoneNumber() << "," << member.getIdType() << "," << member.getIdNumber() << "," << member.getLicenceNumber() << "," << member.getExpiryDate() << "," << member.getPoints() << "," << member.getRentScoreAverage() << "\n";
+    outFile << member.getMemberID() << "," << member.getFullName() << "," << member.getUsername() << "," << member.getPassword() << "," << member.getPhoneNumber() << "," << member.getIdType() << "," << member.getIdNumber() << "," << member.getLicenceNumber() << "," << member.getExpiryDate() << "," << member.getPoints() << "," << member.getRentScoreAverage() << "," << member.getRentStatus() <<"\n";
     outFile.close();
-    cout << "File saved" << endl;
+    // cout << "File saved" << endl;
 }
 
 // write bike data
@@ -48,7 +60,7 @@ void Database::writeMotorbikeData(Motorbike &motorbike){
     ofstream outFile("Database/Motorbikes.dat",ios::app);
     outFile << motorbike.getOwnerID() << "," << motorbike.getModel() << "," << motorbike.getColor() << "," << motorbike.getEngineSize() << "," << motorbike.getMode() << "," << motorbike.getYearMade() << "," << motorbike.getDescription() << "," << motorbike.getRent() << "," << motorbike.getRatingAverage() << "," << motorbike.getCity() << "," << motorbike.getPointsPerDay() << "," << motorbike.getMinimumRenterScore() << "\n";
     outFile.close();
-    cout << "File saved" << endl; 
+    // cout << "File saved" << endl; 
 }
 
 //writes review data
@@ -56,14 +68,14 @@ void Database::writeReviewData(Review &review) {
     ofstream outFile("Database/Reviews.dat",ios::app);
     outFile << review.getReviewType() << "," << review.getID() << "," << review.getScore() << "," << review.getComment() << "\n";
     outFile.close();
-    cout << "File saved" << endl;
+    // cout << "File saved" << endl;
 }
 // writes request data
 void Database::writeRequestData(Request &request) {
     ofstream outFile("Database/Requests.dat",ios::app);
     outFile << request.getRenterID() << "," << request.getOwnerID() << "," << request.getCredit() << "," << request.getStatus() << "," << request.getDecline() << "\n";
     outFile.close();
-    cout << "File saved" << endl;
+    // cout << "File saved" << endl;
 }
 
 //reads the current member data
@@ -85,7 +97,7 @@ Member Database::readMemberData(string currID){
     string expiryDate;
     int points;
     double rentScoreAverage;
-
+    bool rentStatus;
     while(inFile.peek()!=EOF){
 
         string field;
@@ -109,10 +121,12 @@ Member Database::readMemberData(string currID){
         expiryDate = field;
         getline(inFile,field,',');
         points = stoi(field);
-        getline(inFile,field,'\n');
+        getline(inFile,field,',');
         rentScoreAverage = stod(field);
+        getline(inFile,field,'\n');
+        rentStatus = (field == "1");
         if(memberID == currID){
-            Member member(memberID,fullName,username,password,phoneNumber,idType,idNumber,licenceNumber,expiryDate,points,rentScoreAverage);
+            Member member(memberID,fullName,username,password,phoneNumber,idType,idNumber,licenceNumber,expiryDate,points,rentScoreAverage,rentStatus);
             curr = member;
             break;
         }
@@ -233,7 +247,7 @@ void Database::replaceMemberData(string currID, Member& newMember){
 
         // If memberID matches currID, write newMember data to the temporary file
         if(memberID == currID){
-            tempFile << newMember.memberID << "," << newMember.fullName << "," << newMember.username << "," << newMember.password << "," << newMember.phoneNumber << "," << newMember.idType << "," << newMember.idNumber << "," << newMember.licenceNumber << "," << newMember.expiryDate << "," << newMember.points << "," << newMember.rentScoreAverage << "\n";
+            tempFile << newMember.memberID << "," << newMember.fullName << "," << newMember.username << "," << newMember.password << "," << newMember.phoneNumber << "," << newMember.idType << "," << newMember.idNumber << "," << newMember.licenceNumber << "," << newMember.expiryDate << "," << newMember.points << "," << newMember.rentScoreAverage << "," << newMember.rentStatus <<"\n";
         } else {
             // Otherwise, write the original line to the temporary file
             tempFile << line << '\n';
@@ -271,7 +285,7 @@ void Database::getAllMembers(){
     string expiryDate;
     int points;
     double rentScoreAverage;
-
+    bool rentStatus;
     while(inFile.peek()!=EOF){
 
         string field;
@@ -295,19 +309,16 @@ void Database::getAllMembers(){
         expiryDate = field;
         getline(inFile,field,',');
         points = stoi(field);
-        getline(inFile,field,'\n');
+        getline(inFile,field,',');
         rentScoreAverage = stod(field);
+        getline(inFile,field,'\n');
+        rentStatus = (field == "1");
 
-        Member member(memberID,fullName,username,password,phoneNumber,idType,idNumber,licenceNumber,expiryDate,points,rentScoreAverage);
+        Member member(memberID,fullName,username,password,phoneNumber,idType,idNumber,licenceNumber,expiryDate,points,rentScoreAverage,rentStatus);
         curr = member;
         members.push_back(curr);
     }
     inFile.close();
-
-    for(auto m : members){
-        m.showInfo();
-        cout << "\n";
-    }
 }
 // returns all bikes
 void Database::getAllMotorbikes(){
@@ -365,10 +376,6 @@ void Database::getAllMotorbikes(){
     }  
     inFile.close();
 
-    for(auto b : motorbikes){
-        b.showDetailedInfo();
-        cout << "\n";
-    }
 }
 
 //return all reviews for renter and bike
@@ -434,9 +441,9 @@ void Database::getAllRequests(){
         ownerID = field;
         getline(inFile,field,',');
         credit = stod(field);
-        getline(inFile,field,'\n');
-        status = (field == "1");
         getline(inFile,field,',');
+        status = (field == "1");
+        getline(inFile,field,'\n');
         decline = (field == "1");
 
 
