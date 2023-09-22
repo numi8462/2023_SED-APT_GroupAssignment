@@ -51,7 +51,7 @@ class Request {
         void setDecline(bool decline);
         void setRenterID(string renterID);
         void setOwnerID(string ownerID);
-
+        void showInfo();
         friend class Member;
 };
 

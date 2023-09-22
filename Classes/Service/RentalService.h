@@ -37,14 +37,15 @@ public:
 
     void rentBike(string id);
     void viewRentedBike(string renterID);
+    void viewMyBike(string ownerID);
     void writeReviewForRenter(string renterID);
     void writeReviewForBike(string ownerID);
     void getAverageRatingForRenter(string renterID);
     void getAverageRatingForBike(string ownerID);
     void viewBikeReviews(string id);
     void createRequest(string renterID, string ownerID);
-    void acceptRequest(string ownerID);
-    void declineRequest(string ownerID);
+    void acceptRequest(string renterID, string ownderID);
+    void declineRequest(string renterID, string ownderID);
     void checkRequest(string renterID);
 
     void getDataFromDatabase();

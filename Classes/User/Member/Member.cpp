@@ -30,6 +30,7 @@ void Member::showInfo(){
     cout << "Expiry Date: " << expiryDate << endl;
     cout << "Points: " << points << endl;
     cout << "Rent Score Average: " << rentScoreAverage << endl;
+    cout << "Rent Status: " << rentStatus << endl;
 }
 
 // getters
@@ -59,7 +60,7 @@ void Member::setLicenceNumber(int licenceNumber){this->licenceNumber = licenceNu
 void Member::setExpiryDate(string expiryDate){this->expiryDate = expiryDate;}
 void Member::setPoints(int points){this->points = points;}
 void Member::setRentScoreAverage(double rentScoreAverage){this->rentScoreAverage = rentScoreAverage;}
-void Member::setRentStatus(bool status){this->rentStatus = rentStatus;}
+void Member::setRentStatus(bool rentStatus){this->rentStatus = rentStatus;}
 
 
 

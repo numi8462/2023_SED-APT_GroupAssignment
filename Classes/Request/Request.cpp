@@ -47,3 +47,16 @@ void Request::setOwnerID(string ownerID) {
   this->ownerID = ownerID;
 }
 
+void Request::showInfo(){
+  cout << "Renter ID: " << renterID;
+  cout << ", Owner ID: " << ownerID;
+  cout << ", Total Payment: " << credit;
+  if(status == false){
+    cout << ", Status: Pending";
+  } else {
+    cout << ", Status: Approved";
+  }
+  cout << ", Decline: " << decline;
+
+}
+

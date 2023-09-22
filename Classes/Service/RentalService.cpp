@@ -91,6 +91,13 @@ void RentalService::viewRentedBike(string renterID){
         }
     }
 }
+void RentalService::viewMyBike(string ownerID){
+    for(auto b : motorbikes){
+        if(b.getOwnerID() == ownerID){
+            b.showDetailedInfo();
+        }
+    }
+};
 void RentalService::writeReviewForRenter(string renterID){
     Review* review = new Review;
 
@@ -143,7 +150,7 @@ void RentalService::getAverageRatingForRenter(string renterID){
         }
     }
     average = total/count;
-    for(auto m : members){
+    for(auto &m : members){
         if(m.getMemberID() == renterID){
             if(count != 0){
                 m.setRentScoreAverage(average);
@@ -165,7 +172,7 @@ void RentalService::getAverageRatingForBike(string ownerID){
         }
     }
     average = total/count;
-    for(auto b : motorbikes){
+    for(auto &b : motorbikes){
         if(b.getOwnerID() == ownerID){
             if(count != 0){
                 b.setRatingAverage(average);
@@ -218,7 +225,7 @@ void RentalService::createRequest(string renterID, string ownerID){
             }
         }
         total = days * points;
-        for(auto m : members){
+        for(auto &m : members){
             if(m.getMemberID() == renterID){
                 int myPoints = m.getPoints();
                 if(myPoints < total){
@@ -237,25 +244,28 @@ void RentalService::createRequest(string renterID, string ownerID){
     }
     saveDataToDatabase();
 };
-void RentalService::acceptRequest(string ownerID){
-    for(auto rq : requests){
-        if(rq.getOwnerID() == ownerID){
+void RentalService::acceptRequest(string renterID, string ownderID){
+    for(auto &rq : requests){
+        if(rq.getRenterID() == renterID && rq.getOwnerID() == ownderID){
             int credit = rq.getCredit();
             rq.setStatus(true);
-            for(auto m : members){
-                if(m.getMemberID() == rq.getRenterID()){
+            for(auto &m : members){
+                if(m.getMemberID() == renterID){
                     m.setRentStatus(true);
                     m.setPoints(m.getPoints() - credit);
+                    cout << "Approved" << endl;
+                    break;
                 }
             }
         }
     }
     saveDataToDatabase();
 };
-void RentalService::declineRequest(string ownerID){
-    for(auto rq : requests){
-        if(rq.getOwnerID() == ownerID){
+void RentalService::declineRequest(string renterID, string ownderID){
+    for(auto &rq : requests){
+        if(rq.getRenterID() == renterID && rq.getOwnerID() == ownderID){
             rq.setDecline(true);
+            rq.setStatus(false);
         }
     }
     saveDataToDatabase();
@@ -264,11 +274,11 @@ void RentalService::declineRequest(string ownerID){
 void RentalService::checkRequest(string renterID){
     int index = 0;
     int found = 0;
-    for(auto rq : requests){
+    for(auto &rq : requests){
         if(rq.getRenterID() == renterID){
             cout << "Found Reqeust" << endl;
             if(rq.getDecline() == true){
-                cout << "\n Your Request have been Declined." << endl;
+                cout << "\n Your Request have been Declined. Your Request will be deleted" << endl;
                 requests.erase(requests.begin() + index);
                 found = 1;
                 break;
@@ -288,7 +298,7 @@ void RentalService::checkRequest(string renterID){
     if(found == 0){
         cout << "\n No request found" << endl;
     }
-    
+    saveDataToDatabase();
 };
 
 // shows list of motorbikes which filters by city, points, and member's rating
@@ -386,6 +396,7 @@ void RentalService::menuMember(Member &member){
         cout << "7. Add credit" << endl;
         cout << "\nEnter your choice: ";
         cin >> choice;
+        cin.ignore();
         switch (choice)
         {
         case 0:
@@ -402,11 +413,13 @@ void RentalService::menuMember(Member &member){
             choice = 0;
             break;
         case 4:
+            viewMyBike(member.getMemberID());
             break;
         case 5:
             checkRequest(member.getMemberID());
             break;
         case 6:
+            menuRequest(member);
             break;
         case 7:
             break;
@@ -439,15 +452,62 @@ void RentalService::menuRentBike(Member& member,string bikeOwnerID){
 }
 
 void RentalService::menuRequest(Member& member){
-    int number = 0;
-    int index = 0;
+    bool found = false;
+    int number = 1;
     cout << "List of Requests:" << endl;
     for(auto rq : requests){
         if(rq.getOwnerID() == member.getMemberID()){
             cout << number << ". ";
+            rq.showInfo();
+            cout << endl;
             number++;
+            found = true;
         }
-        index++;
     }
+    if(found == false){
+        cout << "None" << endl;
+    }
+    cout << "\n1. Approve Request" << endl;
+    cout << "2. Decline Request" << endl;
+    cout << "Enter your choice: ";
+    int choice;
+    do
+    {
+        cin >> choice;
+        cin.ignore();
+        if(choice == 1){
+            string id;
+            bool foundID = false;
+            cout << "Type in the renter id you want to approve: ";
+            getline(cin,id);
+            for(auto rq : requests){
+                if(rq.getOwnerID() == member.getMemberID() && rq.getRenterID() == id){
+                    acceptRequest(id,member.getMemberID());
+                    foundID = true;
+                }
+            }
+            if(foundID == false){
+                cout << "No Matching ID" << endl;
+            }
+            break;
+        } else if (choice == 2){
+            string mID;
+            bool foundMID = false;
+            cout << "Type in the renter id you want to decline: ";
+            getline(cin,mID);
+            for(auto rq : requests){
+                if(rq.getOwnerID() == member.getMemberID() && rq.getRenterID() == mID){
+                    declineRequest(mID,member.getMemberID());
+                    foundMID = true;
+                }
+            }
+            if(foundMID == false){
+                cout << "No Matching ID" << endl;
+            }
+            break;
+        }
+    } while (choice < 1 || choice > 2);
+    
+
 };
 
