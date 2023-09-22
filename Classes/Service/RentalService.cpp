@@ -180,12 +180,13 @@ void RentalService::registerMember(){
     cout << "\nAccount Created!" << endl;
 }
 void RentalService::viewMyInfo(string ownerID){
-    cout << "\n";
     for(auto m : members){
         if(m.getMemberID() == ownerID){
             m.showInfo();
         }
     }
+    cout << "Reviews I received";
+
     for(auto rv : renterReviews){
         if(rv.getID() == ownerID){
             rv.showReview();
@@ -238,7 +239,6 @@ void RentalService::viewMyBike(string ownerID){
             break;
         }
     }
-    cout << "Reviews I received" << endl;
     for(auto rv : bikeReviews){
         if(rv.getID() == ownerID){
             viewBikeReviews(ownerID);
