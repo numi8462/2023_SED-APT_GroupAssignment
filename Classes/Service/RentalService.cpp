@@ -179,7 +179,13 @@ void RentalService::registerMember(){
     saveDataToDatabase();
     cout << "\nAccount Created!" << endl;
 }
-
+void RentalService::viewMyInfo(string ownerID){
+    for(auto m : members){
+        if(m.getMemberID() == ownerID){
+            m.showInfo();
+        }
+    }
+}
 void RentalService::rentBike(string id){
     for(auto &member : members){
         if(member.getMemberID() == id){
@@ -285,42 +291,86 @@ void RentalService::registerBike(string ownerID){
     saveDataToDatabase();
     
 }
-void RentalService::writeReviewForRenter(string renterID){
-    Review* review = new Review;
+void RentalService::writeReviewForRenter(string ownerID){
+    string renterID;
+    int count = 1;
+    bool hasRenter = false;
+    cout << "Choose a renter to Write review for";
 
-    int score;
-    string comment;
+    for(auto rq : requests){
+        if(rq.getOwnerID() == ownerID){
+            if(rq.getStatus() == true){
+                cout << count << ". " << rq.getRenterID();
+                hasRenter = true;
+                count++;
+            }
+        }
+        
+    }
+    cout << "Type the renter's ID: ";
+    getline(cin,renterID);
 
-    cout << "Please write the review for Renter:" << endl;
-    cout << "Score (1-10): ";
-    cin >> score;
-    cin.ignore(1);
-    cout << "Write comment: ";
-    getline(cin,comment);
-    review->setReviewType("renter");
-    review->setScore(score);
-    review->setComment(comment);
-    review->setID(renterID);
-    renterReviews.push_back(*review);
+    if(hasRenter == true){
+        Review* review = new Review;
+        int score;
+        string comment;
+
+        cout << "Please write the review for Renter:" << endl;
+        cout << "Score (1-10): ";
+        cin >> score;
+        cin.ignore(1);
+        cout << "Write comment: ";
+        getline(cin,comment);
+        review->setReviewType("renter");
+        review->setScore(score);
+        review->setComment(comment);
+        review->setID(renterID);
+        renterReviews.push_back(*review);
+    } else {
+        cout << "\nNo renter found" << endl;
+    }
+    
+
+
     saveDataToDatabase();
 };
 void RentalService::writeReviewForBike(string ownerID){
-    Review* review = new Review;
+    string bikeID;
+    bool hasRent = false;
+    for(auto rq : requests){
+        if(rq.getRenterID() == ownerID){
+            if(rq.getStatus() == true){
+                hasRent = true;
+                bikeID = rq.getOwnerID();
+            }
+            
+        }
+        
+    }
 
-    int score;
-    string comment;
+    if(hasRent == true){
+        Review* review = new Review;
 
-    cout << "Please write the review for Renter:" << endl;
-    cout << "Score (1-10): ";
-    cin >> score;
-    cin.ignore(1);
-    cout << "Write comment: ";
-    getline(cin,comment);
-    review->setReviewType("renter");
-    review->setScore(score);
-    review->setComment(comment);
-    review->setID(ownerID);
-    bikeReviews.push_back(*review);
+        int score;
+        string comment;
+
+        cout << "Please write the review for Bike" << endl;
+        cout << "Bike Owner: " << bikeID << endl;
+        cout << "Score (1-10): ";
+        cin >> score;
+        cin.ignore(1);
+        cout << "Write comment: ";
+        getline(cin,comment);
+        review->setReviewType("bike");
+        review->setScore(score);
+        review->setComment(comment);
+        review->setID(ownerID);
+        bikeReviews.push_back(*review);
+    } else {
+        cout << "\nNo rented bike found" << endl;
+    }
+
+
     saveDataToDatabase();
 };
 
@@ -544,7 +594,20 @@ void RentalService::unlistBike(string ownerID){
     }
     saveDataToDatabase();
 }
-
+void RentalService::addCredit(string ownerID){
+    int amount;
+    cout << "\nInput amount to charge: ";
+    cin >> amount;
+    cin.ignore();
+    for(auto &m : members){
+        if(m.getMemberID() == ownerID){
+            m.setPoints(m.getPoints() + amount);
+        }
+    }
+    cout << "\nCredit added" << endl;
+    saveDataToDatabase();
+    getDataFromDatabase();
+}
 // main menu
 void RentalService::menuMain(){
     cout << "\nEEET2482/COSC2082 ASSIGNMENT" << endl;
@@ -686,7 +749,7 @@ void RentalService::menuAdmin(){
 }
 // menu for member
 void RentalService::menuMember(Member &member){
-
+    
     int choice;
     do {
         cout << "---------------------------------------"<< endl;
@@ -711,7 +774,7 @@ void RentalService::menuMember(Member &member){
             break;
         case 1:
             cout << "<          Your Information          >" << endl;
-            member.showInfo();
+            viewMyInfo(member.getMemberID());
             getAverageRatingForRenter(member.getMemberID());
             break;
         case 2:
@@ -731,6 +794,7 @@ void RentalService::menuMember(Member &member){
             menuRequest(member);
             break;
         case 7:
+            addCredit(member.getMemberID());
             break;
         case 8:
             break;
@@ -754,7 +818,7 @@ void RentalService::menuMemberLogin() {
         cout << "|     1.Login As Member                |\n"<<endl;
         cout << "|     2.Back to main menu              |\n"<< endl;
         cout << "---------------------------------------\n"<< endl;
-        cout << "Enter your choice: ";
+        cout << "Enter your choice (1 or 2): ";
         cin >> choice;
         cin.ignore();
         switch (choice) {
@@ -877,7 +941,28 @@ void RentalService::menuRequest(Member& member){
 };
 
 void RentalService::menuWriteReview(Member& member){
+    int choice;
+    do
+    {
+        cout << "\n1. Write Review for Renter" << endl;
+        cout << "\n2. Write Review for Bike" << endl;
+        cout << "\nEnter your choice: ";
 
+        cin >> choice;
+        cin.ignore();
+        switch (choice) {
+            case 1:
+                writeReviewForRenter(member.getMemberID());
+                break;
+            case 2:
+                writeReviewForBike(member.getMemberID());
+                break;
+            default:
+                cout << "Invalid Choice" << endl;
+                break;
+        }
+    } while (choice < 1 || choice > 2);
+    
 }
 
 void RentalService::loginMember(){

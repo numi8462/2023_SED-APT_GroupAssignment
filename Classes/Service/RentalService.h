@@ -42,7 +42,8 @@ public:
     void viewMyBike(string ownerID); // view my bike, if no bike add one
     void registerBike(string ownerID); // register bike
 
-    void writeReviewForRenter(string renterID);
+    void viewMyInfo(string ownerID);
+    void writeReviewForRenter(string ownerID);
     void writeReviewForBike(string ownerID);
 
     void getAverageRatingForRenter(string renterID); // get average rating from reviews
