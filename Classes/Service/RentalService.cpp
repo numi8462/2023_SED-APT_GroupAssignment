@@ -185,7 +185,7 @@ void RentalService::viewMyInfo(string ownerID){
             m.showInfo();
         }
     }
-    cout << "Reviews I received";
+    cout << "Reviews I received" << endl;
 
     for(auto rv : renterReviews){
         if(rv.getID() == ownerID){
