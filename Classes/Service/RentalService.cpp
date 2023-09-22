@@ -575,6 +575,13 @@ void RentalService::showMotorbikeList(string city, int myPoints, double myRating
     if(motorbikes[i].getCity() == city && motorbikes[i].getPointsPerDay() <= myPoints && motorbikes[i].getMinimumRenterScore() <= myRating){
         cout << listNumber << ". ";
         motorbikes[i].showInfo();
+        
+        for(auto rv : bikeReviews){
+            if(rv.getID() == motorbikes[i].getOwnerID()){
+                cout << "               Review: ";
+                rv.showReview();
+            }
+        }
         listNumber++;
     }
     }

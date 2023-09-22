@@ -64,7 +64,7 @@ void Motorbike::showDetailedInfo(){
 
 // shows brief info of bike
 void Motorbike::showInfo(){
-  cout << "OwnerID: " << ownerID << ", Model: " << model << "Color: " << color <<", Credit per day: " << pointsPerDay << ", City: " << city << "\n" << endl;
+  cout << "OwnerID: " << ownerID << ", Model: " << model << "Color: " << color <<", Credit per day: " << pointsPerDay << ", City: " << city << endl;
 }
 
 void Motorbike::showRentInfo(){
