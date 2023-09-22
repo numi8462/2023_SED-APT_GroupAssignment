@@ -1,8 +1,2 @@
-renter,MEM1,5,comment
-renter,MEM1,7,comment
-renter,MEM2,8,good
-bike,MEM2,5,comment
-bike,MEM2,7,comment
-bike,MEM2,9,comment
-bike,MEM4,5,hi
-bike,MEM3,5,hello
+renter,MEM5,9,used bike in good condition
+bike,MEM1,9,good bike
