@@ -19,7 +19,7 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
     /* code */
-    Database database;
+    Database database;  
     RentalService service;
     service.getDataFromDatabase();
     service.menuMain();

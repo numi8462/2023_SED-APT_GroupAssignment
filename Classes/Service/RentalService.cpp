@@ -309,10 +309,10 @@ void RentalService::writeReviewForRenter(string ownerID){
     cout << "Type the renter's ID: ";
     getline(cin,renterID);
 
-    for(auto rq : requests){
+    for(auto &rq : requests){
         if(rq.getRenterID() == renterID && rq.getOwnerID() == ownerID){
             if(rq.getStatus() == true){
-                hasRenter == true;
+                hasRenter = true;
                 cout << "\nRenter Found" << endl;
             }
         }
