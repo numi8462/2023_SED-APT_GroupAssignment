@@ -35,28 +35,32 @@ public:
     vector<Review> getBikeReviews();
     vector<Request> getRequests();
 
-    void viewAllBike();
-    void rentBike(string id);
-    void viewRentedBike(string renterID);
-    void viewMyBike(string ownerID);
+    void viewAllBike(); // view all bikes
+    void viewAllMember(); // view all members
+    void rentBike(string id); // member rents bike
+    void viewRentedBike(string renterID); // view rented bike
+    void viewMyBike(string ownerID); // view my bike
+
     void writeReviewForRenter(string renterID);
     void writeReviewForBike(string ownerID);
-    void getAverageRatingForRenter(string renterID);
-    void getAverageRatingForBike(string ownerID);
-    void viewBikeReviews(string id);
-    void createRequest(string renterID, string ownerID);
-    void acceptRequest(string renterID, string ownderID);
-    void declineRequest(string renterID, string ownderID);
-    void checkRequest(string renterID);
 
-    void loginMember();
-    void loginAdmin();
+    void getAverageRatingForRenter(string renterID); // get average rating from reviews
+    void getAverageRatingForBike(string ownerID);
+
+    void viewBikeReviews(string id);
+    void createRequest(string renterID, string ownerID); // create request to Owner
+    void acceptRequest(string renterID, string ownderID);// owner can accept request
+    void declineRequest(string renterID, string ownderID);// owner declines request
+    void checkRequest(string renterID);// member can check the request status
+
+    void loginMember(); // confirms login
+    void loginAdmin();  // confirms admin
     void unlistBike(string ownerID);
     void returnBike(string renterID, string ownerID);
     void addCredit(string ownerID);
 
-    void getDataFromDatabase();
-    void saveDataToDatabase();
+    void getDataFromDatabase(); // reads data from database
+    void saveDataToDatabase(); // saves data to database
     // register guest to member
     void registerMember();
 
@@ -78,6 +82,7 @@ public:
     void menuMemberLogin();
 
     // menu for admin
+    void menuAdmin();
     void menuAdminLogin();
 
     //menu for renting bike

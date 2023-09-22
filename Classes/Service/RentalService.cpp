@@ -21,8 +21,19 @@ vector<Review> RentalService::getRenterReviews(){return renterReviews;};
 vector<Review> RentalService::getBikeReviews(){return bikeReviews;};
 vector<Request> RentalService::getRequests(){return requests;};
 
+void RentalService::viewAllMember(){
+    cout << "\n";
+    int count = 1;
+    for(auto m : members){
+        cout << "MEMBER " << count << endl;
+        m.showInfo();
+        cout << "\n";
+        count++;
+    }
+}
 // view all bike
 void RentalService::viewAllBike(){
+    cout << "\n";
     int count = 1;
     for(auto bike : motorbikes){
         cout << count << ". ";
@@ -142,11 +153,13 @@ void RentalService::viewRentedBike(string renterID){
     returnBike(renterID, ownerID);
 }
 void RentalService::viewMyBike(string ownerID){
+    getAverageRatingForBike(ownerID);
     for(auto b : motorbikes){
         if(b.getOwnerID() == ownerID){
             b.showDetailedInfo();
         }
     }
+    
 };
 void RentalService::writeReviewForRenter(string renterID){
     Review* review = new Review;
@@ -209,6 +222,7 @@ void RentalService::getAverageRatingForRenter(string renterID){
             }
         }
     }
+    saveDataToDatabase();
 };
 void RentalService::getAverageRatingForBike(string ownerID){
     double score = 10;
@@ -231,6 +245,7 @@ void RentalService::getAverageRatingForBike(string ownerID){
             }
         }
     }
+    saveDataToDatabase();
 };
 void RentalService::viewBikeReviews(string id){
     int index = 1;
@@ -398,7 +413,7 @@ void RentalService::menuMain(){
             menuMemberLogin();
             break;
         case 3:
-            // menuAdminLogin();
+            menuAdminLogin();
             break;
         default:
             cout << "Invalid choice" << endl;
@@ -483,7 +498,33 @@ void RentalService::menuSearchBike(Member& member){
     
     
 }
+void RentalService::menuAdmin(){
+    int choice;
+    do
+    {
+        cout << "---------------------------------------\n"<< endl;
+        cout << "|              ADMIN MENU              |\n"<< endl;
+        cout << "|     1.View Member List               |\n" <<endl;
+        cout << "|     2.View Bike List                 |\n" <<endl;
+        cout << "|     3.Back to main menu              |\n"<< endl;
+        cout << "---------------------------------------\n"<< endl;
+        cout << "Enter your choice (Type Number): ";
+        cin >> choice;
+        cin.ignore();
+                switch (choice) {
+            case 1:
+                viewAllMember();
+                break;
+            case 2:
+                viewAllBike();
+                break;
+            case 3:
+                break;
+        }
+    } while (choice != 3);
+    
 
+}
 // menu for member
 void RentalService::menuMember(Member &member){
 
@@ -502,7 +543,7 @@ void RentalService::menuMember(Member &member){
         cout << "8. Write Review" << endl;
         cout << "9. Unlist Bikes" << endl;
         cout << "---------------------------------------\n"<< endl;
-        cout << "\nEnter your choice: ";
+        cout << "\nEnter your choice (Please type number 0 to 9): ";
         cin >> choice;
         cin.ignore();
         switch (choice)
@@ -563,7 +604,7 @@ void RentalService::menuMemberLogin() {
             case 2:
                 menuMain();
                 break;
-    }
+        }
     } while (choice != 2);
     
 
@@ -573,30 +614,21 @@ void RentalService::menuMemberLogin() {
 
 // menu for admin
 void RentalService::menuAdminLogin(){
-    string username, password;
-    cout << "---------------------------------------\n"<< endl;
-    cout << "|              ADMIN MENU             |\n"<< endl;
-    cout << "|     1.Login As Admin                |\n"<<endl;
-    cout<< "|     2.Back to main menu             |\n"<< endl;
-    cout << "---------------------------------------\n"<< endl;
     int choice;
-    cin >> choice;
-
-    do {
+    do
+    {
+        cout << "---------------------------------------\n"<< endl;
+        cout << "|              ADMIN MENU              |\n"<< endl;
+        cout << "|     1.Login As Admin                 |\n"<<endl;
+        cout << "|     2.Back to main menu              |\n"<< endl;
+        cout << "---------------------------------------\n"<< endl;
+        cout << "Enter your choice (1 or 2): ";
+        cin >> choice;
+        cin.ignore();
         switch (choice) {
             case 1:
-                // cin.ignore();
-                // cout << "Enter your username: " << endl;
-                // getline(cin, username);
-                // cout << "Enter your password: "<< endl;
-                // getline(cin, password);
-                // if (admin->username == username && admin->password == password) {
-                //     cout << "Log in successfully!!! \n\n\n\n"<< endl;
-                //     adminMenu();
-                //     break;
-                // } else {
-                //     cout <<"\n\nWrong username or password!!! \n"<< endl;
-                // }
+                loginAdmin();
+                break;
             case 2:
                 menuMain();
                 break;
@@ -697,7 +729,7 @@ void RentalService::loginMember(){
     getline(cin, password);
     for(auto m : members){
         if (m.getUsername() == username && m.getPassword() == password) {
-            cout << "Log in successfully!!! \n"<< endl;
+            cout << "\033[32m\nLog in successfully!!!\033[0m\n"<< endl;
             curr = m;
             menuMember(curr);
             break;
@@ -705,6 +737,41 @@ void RentalService::loginMember(){
     }
 
     if(login == false) {
-        cout <<"\n\nWrong username or password!!! \n"<< endl;
+        cout <<"\nWrong username or password!!! \n"<< endl;
     } 
+}
+
+void RentalService::loginAdmin(){
+    bool login = false;
+    string username, password, dUsername, dPassword;
+    cout << "Enter your username: ";
+    getline(cin, username);
+    cout << "Enter your password: ";
+    getline(cin, password);
+
+    ifstream inFile;
+    inFile.open("Database/Admin.dat");
+    if (inFile.is_open()) {
+        while (inFile.peek()!=EOF) {
+            string field;
+            getline(inFile, field, ',');
+            dUsername = field;
+            getline(inFile, field, '\n');
+            dPassword = field;
+            if (dUsername == username && dPassword == password) {
+                cout << "\033[32m \nLog in successfully!!!\033[0m\n"<< endl;
+                login = true;
+                break;
+            }
+        }
+        inFile.close();
+    } else {
+        cout << "No file found" << endl;
+    }
+
+    if(login == true){
+        menuAdmin();
+    } else {
+        cout << "\nWrong ID or PASSWORD" << endl;
+    }
 }

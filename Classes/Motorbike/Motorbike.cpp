@@ -62,10 +62,10 @@ void Motorbike::showDetailedInfo(){
     status = "Bike not rented";
   }
   cout << "Rent Status: " << status << endl;
-  cout << "Rating Average: " << ratingAverage << endl;
   cout << "City: " << city << endl;
   cout << "Points Per Day: " << pointsPerDay << endl; 
   cout << "Minimum Renter Score: " << minimumRenterScore << endl;
+  cout << "Rating Average: " << ratingAverage << endl;
 }
 
 // shows brief info of bike
