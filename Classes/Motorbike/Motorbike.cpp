@@ -56,12 +56,6 @@ void Motorbike::showDetailedInfo(){
   cout << "Mode: " << mode << endl;
   cout << "Year Made: " << yearMade << endl;
   cout << "Description: " << description << endl;
-  if(rent == 1){
-    status = "Bike rented";
-  } else {
-    status = "Bike not rented";
-  }
-  cout << "Rent Status: " << status << endl;
   cout << "City: " << city << endl;
   cout << "Points Per Day: " << pointsPerDay << endl; 
   cout << "Minimum Renter Score: " << minimumRenterScore << endl;

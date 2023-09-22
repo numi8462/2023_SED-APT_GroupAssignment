@@ -295,13 +295,12 @@ void RentalService::writeReviewForRenter(string ownerID){
     string renterID;
     int count = 1;
     bool hasRenter = false;
-    cout << "Choose a renter to Write review for";
+    cout << "Choose a renter to Write review for\n";
 
     for(auto rq : requests){
         if(rq.getOwnerID() == ownerID){
             if(rq.getStatus() == true){
-                cout << count << ". " << rq.getRenterID();
-                hasRenter = true;
+                cout << count << ". " << rq.getRenterID() << endl;
                 count++;
             }
         }
@@ -309,6 +308,16 @@ void RentalService::writeReviewForRenter(string ownerID){
     }
     cout << "Type the renter's ID: ";
     getline(cin,renterID);
+
+    for(auto rq : requests){
+        if(rq.getRenterID() == renterID && rq.getOwnerID() == ownerID){
+            if(rq.getStatus() == true){
+                hasRenter == true;
+                cout << "\nRenter Found" << endl;
+            }
+        }
+        
+    }
 
     if(hasRenter == true){
         Review* review = new Review;
@@ -364,7 +373,7 @@ void RentalService::writeReviewForBike(string ownerID){
         review->setReviewType("bike");
         review->setScore(score);
         review->setComment(comment);
-        review->setID(ownerID);
+        review->setID(bikeID);
         bikeReviews.push_back(*review);
     } else {
         cout << "\nNo rented bike found" << endl;
@@ -797,6 +806,7 @@ void RentalService::menuMember(Member &member){
             addCredit(member.getMemberID());
             break;
         case 8:
+            menuWriteReview(member);
             break;
         case 9:
             unlistBike(member.getMemberID());
