@@ -69,26 +69,28 @@ void RentalService::rentBike(string id){
     }
 }
 void RentalService::viewRentedBike(string renterID){
-    string owner = "";
+    string ownerID = "";
+    bool bike = false;
     for(auto &member : members){
         if(member.getMemberID() == renterID){
             if(member.getRentStatus() == true){
                 for(auto rq : requests){
                     if(rq.getRenterID() == renterID){
-                        owner = rq.getOwnerID();
+                        ownerID = rq.getOwnerID();
+                        bike = true;
                     }
                 }
-            } else {
-                cout << "You have not rented any motorbike!" << endl;
             }
-            
         }
     }
 
     for(auto &m : motorbikes){
-        if(m.getOwnerID() == owner){
+        if(m.getOwnerID() == ownerID){
             m.showDetailedInfo();
         }
+    }
+    if(bike == false){
+        cout << "You have not rented any motorbike!" << endl;
     }
 }
 void RentalService::viewMyBike(string ownerID){
@@ -254,7 +256,9 @@ void RentalService::acceptRequest(string renterID, string ownderID){
                     m.setRentStatus(true);
                     m.setPoints(m.getPoints() - credit);
                     cout << "Approved" << endl;
-                    break;
+                }
+                if(m.getMemberID() == ownderID){
+                    m.setPoints(m.getPoints() + credit);
                 }
             }
         }
@@ -467,7 +471,8 @@ void RentalService::menuRequest(Member& member){
     if(found == false){
         cout << "None" << endl;
     }
-    cout << "\n1. Approve Request" << endl;
+    cout << "\n0. Go back to menu" << endl;
+    cout << "1. Approve Request" << endl;
     cout << "2. Decline Request" << endl;
     cout << "Enter your choice: ";
     int choice;
@@ -506,7 +511,10 @@ void RentalService::menuRequest(Member& member){
             }
             break;
         }
-    } while (choice < 1 || choice > 2);
+        if(choice == 0){
+            break;
+        }
+    } while (choice < 0 || choice > 2);
     
 
 };

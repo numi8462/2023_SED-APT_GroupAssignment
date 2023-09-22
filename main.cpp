@@ -19,9 +19,6 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
     /* code */
-    Member m1("MEM1","Alice", "username", "password",222,"Citizen ID",333, 222,"expiryDate",10,6,0);
-    Member m3("MEM3","John", "username", "password",222,"Citizen ID",333, 222,"expiryDate",10,6,0);
-    Member m2("MEM2","Bob", "username", "password",222,"Citizen ID",444, 222,"expiryDate",10,5,0);
 
     // Motorbike b1("MEM1","yamada","red","enginesize","mode","yearmade","description",false,10,"Hanoi",5,8);3
     // Motorbike b2("MEM2","Honda","blue","enginesize","mode","yearmade","description",false,9,"Hanoi",6,5);
@@ -56,8 +53,16 @@ int main(int argc, char const *argv[])
 
     Database database;
     RentalService service;
+    Member currMember;
     service.getDataFromDatabase();
-    service.menuMember(m1);
+    for(auto m  : service.getMembers()){
+      if(m.getMemberID() == "MEM1"){
+        currMember = m;
+      }
+    }
+    
+    
+    service.menuMember(currMember);
 
     return 0;
 }

@@ -1,3 +1,3 @@
-MEM1,Alice,username,password,222,Citizen ID,333,222,expiryDate,100,6,0
+MEM1,Alice,username,password,222,Citizen ID,333,222,expiryDate,93,6,1
 MEM2,Bob,username,password,222,Citizen ID,444,222,expiryDate,90,5,1
-MEM3,John,username,password,222,Citizen ID,444,222,expiryDate,100,5,0
+MEM3,John,username,password,222,Citizen ID,444,222,expiryDate,107,5,1
