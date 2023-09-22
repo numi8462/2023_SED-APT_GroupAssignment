@@ -39,7 +39,8 @@ public:
     void viewAllMember(); // view all members
     void rentBike(string id); // member rents bike
     void viewRentedBike(string renterID); // view rented bike
-    void viewMyBike(string ownerID); // view my bike
+    void viewMyBike(string ownerID); // view my bike, if no bike add one
+    void registerBike(string ownerID); // register bike
 
     void writeReviewForRenter(string renterID);
     void writeReviewForBike(string ownerID);

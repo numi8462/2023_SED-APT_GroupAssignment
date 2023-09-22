@@ -114,7 +114,70 @@ void RentalService::returnBike(string renterID, string ownerID){
 }
 // register guest to member
 void RentalService::registerMember(){
+    string memberID,fullName,username,password,idType,expiryDate;
+    int phoneNumber,idNumber,licenceNumber;
 
+    Member* newMember = new Member;
+    int count = 1;
+    string temp;
+    bool idFound = false;
+
+    while (!idFound) {
+        temp = "MEM" + to_string(count);
+        idFound = true;
+
+        for (auto& m : members) {
+            if (m.getMemberID() == temp) {
+                idFound = false;
+                break;
+            }
+        }
+
+        if (idFound) {
+            memberID = temp;
+        } else {
+            ++count;
+        }
+    }
+    cout << "Your Member ID is: " << memberID << endl;
+    cout << "Enter Fullname: ";
+    getline(cin,fullName);
+    cout << "Enter Username: ";
+    getline(cin,username);
+    cout << "Enter Password: ";
+    getline(cin,password);
+    cout << "Enter Phone Number: ";
+    cin >> phoneNumber;
+    cin.ignore();
+    cout << "Enter ID type (Citizen ID or Passport): ";
+    getline(cin,idType);
+    cout << "Enter ID Number: ";
+    cin >> idNumber;
+    cin.ignore();
+    cout << "Enter Licence Number: ";
+    cin >> licenceNumber;
+    cin.ignore();
+    cout << "Enter expiry date: ";
+    getline(cin,expiryDate);
+
+    newMember->setMemberID(memberID);
+    newMember->setFullName(fullName);
+    newMember->setUsername(username);
+    newMember->setPassword(password);
+    newMember->setPhoneNumber(phoneNumber);
+    newMember->setIdType(idType);
+    newMember->setIdNumber(idNumber);
+    newMember->setLicenceNumber(licenceNumber);
+    newMember->setExpiryDate(expiryDate);
+    newMember->setRentStatus(false);
+    newMember->setRentScoreAverage(10);
+
+    cout << "You will be charged $20 for 20points for initial fee" << endl;
+    newMember->setPoints(20);
+
+    members.push_back(*newMember);
+    saveDataToDatabase();
+    cout << "\nAccount Created!" << endl;
 }
 
 void RentalService::rentBike(string id){
@@ -153,14 +216,75 @@ void RentalService::viewRentedBike(string renterID){
     returnBike(renterID, ownerID);
 }
 void RentalService::viewMyBike(string ownerID){
+    cout << "\nMy bike" << endl;
+    bool isFounded = false;
     getAverageRatingForBike(ownerID);
     for(auto b : motorbikes){
         if(b.getOwnerID() == ownerID){
             b.showDetailedInfo();
+            isFounded = true;
+            break;
         }
     }
-    
+    if(isFounded = false){
+        cout << "\nNo Registered Bike" << endl;
+        cout << "Would you like to register one?" << endl;
+        cout << "1. Yes" << endl;
+        cout << "2. No" << endl;
+        cout << "Please enter 1 or 2: ";
+        int choice;
+        cin >> choice;
+        cin.ignore();
+        if(choice == 1){
+            registerBike(ownerID);
+        }
+    }
 };
+void RentalService::registerBike(string ownerID){
+    Motorbike* newBike = new Motorbike;
+    string model,color,engineSize,mode,yearMade,description,city;
+    int pointsPerDay;
+    double minimumRenterScore;
+    cout << "\nPlease enter bike information" << endl;
+    cout << "Enter model: ";
+    getline(cin,model);
+    cout << "Enter color: ";
+    getline(cin,color);
+    cout << "Enter engine size: ";
+    getline(cin,engineSize);
+    cout << "Enter mode: ";
+    getline(cin,mode);
+    cout << "Enter year made: ";
+    getline(cin,yearMade);
+    cout << "Enter description: ";
+    getline(cin,description);
+    cout << "Enter city (Type Hanoi or Saigon): ";
+    getline(cin,city);
+    cout << "Enter Cost of rent per day: ";
+    cin >> pointsPerDay;
+    cin.ignore();
+    cout << "Enter minimum renter score 1 to 10 (Renters with lower score cannot rent your bike): ";
+    cin >> minimumRenterScore;
+    cin.ignore();
+
+    newBike->setOwnerID(ownerID);
+    newBike->setModel(model);
+    newBike->setColor(color);
+    newBike->setEngineSize(engineSize);
+    newBike->setMode(mode);
+    newBike->setYearMade(yearMade);
+    newBike->setDescription(description);
+    newBike->setCity(city);
+    newBike->setPointsPerDay(pointsPerDay);
+    newBike->setMinimumRenter(minimumRenterScore);
+    newBike->setRentStatus(false);
+    newBike->setRatingAverage(10);
+
+    motorbikes.push_back(*newBike);
+    cout << "\nMotorbike Registered!!" << endl;
+    saveDataToDatabase();
+    
+}
 void RentalService::writeReviewForRenter(string renterID){
     Review* review = new Review;
 
@@ -444,7 +568,7 @@ void RentalService::menuGuest(){
             viewAllBike();
             break;
         case 2:
-            
+            registerMember();
             break;
         case 3:
             menuMain();
@@ -536,7 +660,7 @@ void RentalService::menuMember(Member &member){
         cout << "1. View my Information" << endl;
         cout << "2. View rented bike" << endl;
         cout << "3. Search Bike for rent" << endl;
-        cout << "4. View my Bike" << endl;
+        cout << "4. My Bike" << endl;
         cout << "5. Check my request" << endl;
         cout << "6. View requests I received" << endl;
         cout << "7. Add credit" << endl;
@@ -564,6 +688,7 @@ void RentalService::menuMember(Member &member){
             break;
         case 4:
             viewMyBike(member.getMemberID());
+            choice = 0;
             break;
         case 5:
             checkRequest(member.getMemberID());
