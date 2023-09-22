@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-
+//Main manu
 void RentalService::menuMain(){
     cout << "\nEEET2482/COSC2082 ASSIGNMENT" << endl;
     cout << "MOTORBIKE RENTAL APPLICATION\n" << endl;
@@ -29,7 +29,7 @@ void RentalService::menuMain(){
             break;
                }
 //guest menu
-System::guestMenu() {
+Database::guestMenu() {
     int choice;
     cout << "---------------------------------------\n" << endl;
     cout <<"|              GUEST MENU             |\n" << endl;
@@ -53,7 +53,7 @@ System::guestMenu() {
 
 }
 //login admin menu
-void System::adminLoginMenu() {
+void Database::adminLoginMenu() {
     string username, password;
 
     cout << "---------------------------------------\n"<< endl;
@@ -85,7 +85,7 @@ void System::adminLoginMenu() {
 
 
 //admin menu
-System::adminMenu() {
+Database::adminMenu() {
     int choice;
     cout <<  "---------------------------------------\n"<< endl;
     cout <<  "|              ADMIN MENU             |\n"<< endl;
@@ -109,7 +109,7 @@ System::adminMenu() {
 
 }
 //login member menu
-void System::memberLoginMenu() {
+void Database::memberLoginMenu() {
     string username, password;
 
     cout << "---------------------------------------\n"<< endl;
